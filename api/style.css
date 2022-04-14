@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Header */
+.header{
+    background-image: url('./img/inmobiliaria.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    max-height: 35rem;
+    position: relative;
+}
+.navbar-bg{
+    background-color: rgba(17, 17, 17, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4rem;
+    z-index: 15;
+}
+.navbar{
+    margin: 0.5rem auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar img{
+    width: 7rem;
+    height: 2.1rem;
+}
+.navbar ul{
+    display: flex;
+}
+.navbar ul li{
+    list-style: none;
+    margin-left: 2rem;
+}
+.navbar ul li:last-of-type{
+    margin-right: 2rem;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: rgb(201, 201, 201);
+}
+.navbar ul li a:hover{
+    color: #fff;
+}
+.mask{
+    background: linear-gradient(180deg,rgba(17, 17, 17, 0), rgba(17, 17, 17, 0.8));
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.logo img{
+    width: 95%;
+    max-width: 30rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    margin: auto;
+}
+
+/* Main */
+.container{
+    width: 95%;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgb(206, 206, 206);
+    margin: 0.2rem auto;
+    padding-top: 1rem;
+}
+
+.main h3{
+    padding-bottom: 1rem;
+}
+
+.cards, .container-form{
+    border-top: 1px solid rgb(206, 206, 206);
+    border-left: 1px solid rgb(206, 206, 206);
+    border-right: 1px solid rgb(206, 206, 206);
+    border-radius: .5rem;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.filters > h3{
+    text-align: center;
+}
+/* .container-form{
+    display: flex;
+    flex-direction: column;
+} */
+
+.container-form label,
+.container-form select,
+.container-form input{
+    display: block;
+    width: 95%;
+    max-width: 20rem;
+    margin: 0.2rem auto;
+    padding: 0.2rem;
+    text-align: center;
+}
+.container-form select,
+.container-form input{
+    height: 2rem;
+    border-radius: 0.5rem;
+}
+.container-form input{
+    margin-top: 1rem;
+    border: none;
+    background-color: #111;
+    color: #fff;
+    text-transform: uppercase;
+}
+.container-form input:hover{
+    cursor: pointer;
+}
+
+.card{
+    border: 1px solid rgb(206, 206, 206);
+    border-radius: 0.5rem;
+    width: 80%;
+    margin: 1rem auto;
+    overflow: hidden;
+}
+.card-content{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .main{
+        flex-direction: row;
+    }
+    
+    .filters{
+        width: 25%;
+    }
+    .properties{
+        width: 75%;
+        text-align: center;
+    }
+
+    .cards{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .card{
+        width: 45%;
+    }
+}
+
+/*caracteristics secccion*/
+.caracteristics {
+    display: flex;
+    justify-content: space-around;
+}
+.caracteristics img{
+    width: 3rem;
+}
+
+.container-price{
+    background-color: #076e07;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.price, .container-price p{
+    color: #fff;
+}
+
+/* Footer */
+.bg-black{
+    background-color: #000;
+    color: #fff;
+}
+.content-footer{
+    margin: auto;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+.colbank{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #01584a;
+}
+
+@media (min-width:768px) {
+}
+
+.colbank img{
+    width: 30rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.copy-bliones{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.copy-bliones p{
+    display: block;
+}
+.footer-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}

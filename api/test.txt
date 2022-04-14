@@ -1,0 +1,999 @@
+<?php
+
+$limit = '10';
+
+$classResidencial = 'A';
+$classMultifamily = 'B';
+$classLotsndLand = 'C';
+
+$typeProperty = 'Property';
+$typeOffice = 'Office';
+$urlResidencial = 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=' . $typeProperty . '&Class=' . $classResidencial . '&QueryType=DMQL2&Query=*&Count=1&Format=STANDARD-XML&StandardNames=0&RestrictedIndicator=****&Limit=' . $limit;
+
+if ($_POST) {
+  $limit = $_POST['limit'];
+  $urlResidencial = 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=' . $typeProperty . '&Class=' . $classResidencial . '&QueryType=DMQL2&Query=*&Count=1&Format=STANDARD-XML&StandardNames=0&RestrictedIndicator=****&Limit=' . $limit;
+}
+
+$urlMultifamily = 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=' . $typeProperty . '&Class=' . $classMultifamily . '&QueryType=DMQL2&Query=*&Count=1&Format=STANDARD-XML&StandardNames=0&RestrictedIndicator=****&Limit=' . $limit;
+$urlLotsndLand = 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=' . $typeProperty . '&Class=' . $classLotsndLand . '&QueryType=DMQL2&Query=*&Count=1&Format=STANDARD-XML&StandardNames=0&RestrictedIndicator=****&Limit=' . $limit;
+$urlOffice = 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=' . $typeOffice . '&Class=Office&QueryType=DMQL2&Query=*&Count=1&Format=STANDARD-XML&StandardNames=0&RestrictedIndicator=****&Limit=' . $limit;
+
+$user = 'gcar.rets.Bliones';
+$password = 'vG(1n57vOw';
+
+//use function PHPSTORM_META\type;
+
+$title = 'Residential';
+$urlQuery = $urlResidencial;
+
+if ($_POST) {
+  if ($_POST['type'] === 'office') {
+    $title = 'Offices';
+    $urlQuery = $urlOffice;
+  } else {
+    switch ($_POST['class']) {
+      case 'residential':
+        $title = 'Residential';
+        $urlQuery = $urlResidencial;
+        break;
+      case 'multifamily':
+        $title = 'MultiFamily';
+        $urlQuery = $urlMultifamily;
+        break;
+      case 'lotndland':
+        $title = 'Lots & Land';
+        $urlQuery = $urlLotsndLand;
+        break;
+    }
+  }
+}
+
+
+//Fetch data
+$curl = curl_init($urlQuery);
+$headers = array(
+  "Content-Type: application/xml",
+  "Accept: application/xml",
+  "X-Requested-With: XMLHttpRequest",
+  "Access-Control-Allow-Origin: *"
+);
+
+$data = "<Request><Login>" . $user . "</Login><Password>" . $password . "</Password></Request>";
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+curl_setopt($curl, CURLOPT_USERPWD, $user . ":" . $password);
+curl_setopt($curl, CURLOPT_URL, $urlQuery);
+curl_setopt($curl, CURLOPT_POST, true);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$resp = curl_exec($curl);
+$error = curl_error($curl);
+curl_close($curl);
+
+//data to array
+$xml = simplexml_load_string($resp);
+$xmlParseJSON = json_encode($xml);
+$arr = json_decode($xmlParseJSON, true);
+
+$arrPropiedades = [];
+$arrOficinas = [];
+$index = 0;
+
+//echo $arr['RETS'];
+
+//Case Default
+if (!$_POST) {
+  //Make Properties Array from Response
+  foreach ($arr as $k => $v) {
+    //echo "<pre>";print_r($v);echo "</pre>";
+    foreach ($v as $l => $val) {
+      foreach ($val as $key => $value) {
+        //echo "<pre>";print_r($value[0]);echo "</pre>";
+        foreach ($value as $llave => $valor) {
+          //echo "<pre>";print_r($valor['Listing']);echo "</pre>";
+          //echo "<pre>";echo $i;;echo "</pre>";echo "<pre>";print_r($value[$llave]);echo "</pre>";
+          //$arrPropiedades[$index] = $value[$llave];
+
+          //format data
+          $arrPropiedades[$index]['streetnumber'] = $value[$llave]['Listing']['StreetAddress']['StreetNumber'];
+          $arrPropiedades[$index]['streetname'] = $value[$llave]['Listing']['StreetAddress']['StreetName'];
+          $arrPropiedades[$index]['unitnumber'] = $value[$llave]['Listing']['StreetAddress']['UnitNumber'];
+          $arrPropiedades[$index]['city'] = $value[$llave]['Listing']['StreetAddress']['City'];
+          $arrPropiedades[$index]['postalcode'] = $value[$llave]['Listing']['StreetAddress']['PostalCode'];
+          $arrPropiedades[$index]['state'] = $value[$llave]['Listing']['StreetAddress']['State'];
+          $arrPropiedades[$index]['publicrewarks'] = $value[$llave]['Listing']['ListingData']['PublicRemarks'];
+          $arrPropiedades[$index]['price'] = $value[$llave]['Listing']['ListingData']['ListPrice'];
+          $arrPropiedades[$index]['county'] = $value[$llave]['Listing']['GeographicData']['County'];
+          $arrPropiedades[$index]['bedrooms'] = $value[$llave]['Bedrooms'];
+          $arrPropiedades[$index]['baths'] = $value[$llave]['Baths']['BathsTotal'];
+          $arrPropiedades[$index]['heating'] = $value[$llave]['Heating'];
+          $arrPropiedades[$index]['cooling'] = $value[$llave]['Cooling'];
+          $arrPropiedades[$index]['extfeat'] = $value[$llave]['ExteriorFeatures'];
+          $arrPropiedades[$index]['typeroof'] = $value[$llave]['Roof'];
+          $arrPropiedades[$index]['typeext'] = $value[$llave]['Exterior'];
+          $index++;
+        }
+      }
+    }
+  }
+}
+
+if ($_POST) {
+  if ($_POST['type'] === 'office') {
+    foreach ($arr as $k => $v) {
+      foreach ($v as $l => $val) {
+        foreach ($val as $key => $value) {
+          foreach ($value as $llave => $valor) {
+            //format data
+            $arrOficinas[$index]['name'] = $value[$llave]['Name'];
+            $arrOficinas[$index]['phone'] = $value[$llave]['ContactInformation']['OfficePhone'];
+            $arrOficinas[$index]['fax'] = $value[$llave]['ContactInformation']['Fax'];
+            $arrOficinas[$index]['email'] = $value[$llave]['ContactInformation']['Email'];
+            $arrOficinas[$index]['street'] = $value[$llave]['StreetAddress']['Unstructured'];
+            $index++;
+          }
+        }
+      }
+    }
+  } else {
+    //Case Properties
+    //Make Properties Array from Response
+    foreach ($arr as $k => $v) {
+
+      foreach ($v as $l => $val) {
+        foreach ($val as $key => $value) {
+
+          foreach ($value as $llave => $valor) {
+
+            //format data
+            $arrPropiedades[$index]['streetnumber'] = $value[$llave]['Listing']['StreetAddress']['StreetNumber'];
+            $arrPropiedades[$index]['streetname'] = $value[$llave]['Listing']['StreetAddress']['StreetName'];
+            $arrPropiedades[$index]['unitnumber'] = $value[$llave]['Listing']['StreetAddress']['UnitNumber'];
+            $arrPropiedades[$index]['city'] = $value[$llave]['Listing']['StreetAddress']['City'];
+            $arrPropiedades[$index]['postalcode'] = $value[$llave]['Listing']['StreetAddress']['PostalCode'];
+            $arrPropiedades[$index]['state'] = $value[$llave]['Listing']['StreetAddress']['State'];
+            $arrPropiedades[$index]['publicrewarks'] = $value[$llave]['Listing']['ListingData']['PublicRemarks'];
+            $arrPropiedades[$index]['price'] = $value[$llave]['Listing']['ListingData']['ListPrice'];
+            $arrPropiedades[$index]['county'] = $value[$llave]['Listing']['GeographicData']['County'];
+
+            switch ($_POST['class']) {
+              case 'residential':
+                $arrPropiedades[$index]['bedrooms'] = $value[$llave]['Bedrooms'];
+                $arrPropiedades[$index]['baths'] = $value[$llave]['Baths']['BathsTotal'];
+                $arrPropiedades[$index]['heating'] = $value[$llave]['Heating'];
+                $arrPropiedades[$index]['cooling'] = $value[$llave]['Cooling'];
+                $arrPropiedades[$index]['extfeat'] = $value[$llave]['ExteriorFeatures'];
+                $arrPropiedades[$index]['typeroof'] = $value[$llave]['Roof'];
+                $arrPropiedades[$index]['typeext'] = $value[$llave]['Exterior'];
+                break;
+              case 'multifamily':
+                //$arrPropiedades[$index]['bedrooms'] = $value[$llave]['Bedrooms'];
+                //$arrPropiedades[$index]['baths'] = $value[$llave]['Baths']['BathsTotal'];
+                $arrPropiedades[$index]['heating'] = $value[$llave]['Heating'];
+                $arrPropiedades[$index]['cooling'] = $value[$llave]['Cooling'];
+                $arrPropiedades[$index]['extfeat'] = $value[$llave]['ExteriorFeatures'];
+                $arrPropiedades[$index]['typeroof'] = $value[$llave]['Roof'];
+                $arrPropiedades[$index]['typeext'] = $value[$llave]['Exterior'];
+                break;
+              case 'lotndland':
+                break;
+            }
+
+            $index++;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Header */
+.header{
+    background-image: url('./img/inmobiliaria.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    max-height: 35rem;
+    position: relative;
+}
+.navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(17, 17, 17, 0.7);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+    z-index: 15;
+}
+.navbar img{
+    width: 7rem;
+    height: 2.1rem;
+}
+.navbar ul{
+    display: flex;
+}
+.navbar ul li{
+    list-style: none;
+    margin-left: 2rem;
+}
+.navbar ul li:last-of-type{
+    margin-right: 2rem;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: rgb(201, 201, 201);
+}
+.navbar ul li a:hover{
+    color: #fff;
+}
+.mask{
+    background: linear-gradient(180deg,rgba(17, 17, 17, 0), rgba(17, 17, 17, 0.8));
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.logo img{
+    width: 95%;
+    max-width: 30rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    margin: auto;
+}
+
+/* Main */
+.main{
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgb(206, 206, 206);
+    width: 95%;
+    max-width: 80rem;
+    margin: 0.2rem auto;
+    padding-top: 1rem;
+}
+
+.main h3{
+    padding-bottom: 1rem;
+}
+
+.cards, .container-form{
+    border-top: 1px solid rgb(206, 206, 206);
+    border-left: 1px solid rgb(206, 206, 206);
+    border-right: 1px solid rgb(206, 206, 206);
+    border-radius: .5rem;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.filters > h3{
+    text-align: center;
+}
+/* .container-form{
+    display: flex;
+    flex-direction: column;
+} */
+
+.container-form label,
+.container-form select,
+.container-form input{
+    display: block;
+    width: 95%;
+    max-width: 20rem;
+    margin: 0.2rem auto;
+    padding: 0.2rem;
+    text-align: center;
+}
+.container-form select,
+.container-form input{
+    height: 2rem;
+    border-radius: 0.5rem;
+}
+.container-form input{
+    margin-top: 1rem;
+    border: none;
+    background-color: #111;
+    color: #fff;
+    text-transform: uppercase;
+}
+.container-form input:hover{
+    cursor: pointer;
+}
+
+.card{
+    border: 1px solid rgb(206, 206, 206);
+    border-radius: 0.5rem;
+    width: 80%;
+    margin: 1rem auto;
+    overflow: hidden;
+}
+.card-content{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .main{
+        flex-direction: row;
+    }
+    
+    .filters{
+        width: 25%;
+    }
+    .properties{
+        width: 75%;
+        text-align: center;
+    }
+
+    .cards{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .card{
+        width: 45%;
+    }
+}
+
+/*caracteristics secccion*/
+.caracteristics {
+    display: flex;
+    justify-content: space-around;
+}
+.caracteristics img{
+    width: 3rem;
+}
+
+.container-price{
+    background-color: #076e07;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.price, .container-price p{
+    color: #fff;
+}
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="mask"></div>
+    <div class="navbar">
+      <img src="./img/logo_blanco_50.png" alt="Logotipo">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About me</a></li>
+        <li><a href="#">Testimonials</a></li>
+        <li><a href="#">Contact me</a></li>
+        <li><a href="#">Gallery</a></li>
+      </ul>
+    </div>
+    <div class="logo">
+      <img src="./img/logo_blanco_50.png" alt="Logotipo Yadi Rosales">
+    </div>
+  </header>
+
+
+  <main class="main">
+    <div class="filters">
+      <h3>Filtros</h3>
+      <div class="container-form">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+          <label for="limit">Limit</label>
+          <select name="limit">
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+          </select>
+          <label for="type">Type</label>
+          <select name="type">
+            <option value="property" selected>Properties</option>
+            <option value="office">Offices</option>
+          </select>
+          <label for="class">Class</label>
+          <select name="class">
+            <option value="residential" selected>Residential</option>
+            <option value="multifamily">MultiFamily</option>
+            <option value="lotsndland">Lots & Land</option>
+          </select>
+          <input type="submit" value="Search">
+        </form>
+      </div>
+    </div>
+    <div class="properties">
+      <h3><?php echo $title; ?></h3>
+      <?php if ($_POST['type'] === 'office') : ?>
+        <div class="cards">
+          <?php for ($i = 0; $i < count($arrOficinas); $i++) : ?>
+            <div class="card">
+              <div class="card-content">
+                <h4><?php echo $arrOficinas[$i]['name']; ?></h4>
+                <div class="description">
+                  <p><?php echo $arrOficinas[$i]['street']; ?></p>
+                </div>
+                <?php if ($_POST['class'] === 'residencial' || !$_POST) : ?>
+                  <div class="caracteristics">
+                    <div class="bath">
+                      <img src="./img/at-solid.svg" alt="Bath icon">
+                      <p><?php echo round($arrOficinas[$i]['email']); ?></p>
+                    </div>
+                    <div class="rooms">
+                      <img src="./img/fax-solid.svg" alt="Bedroom icon">
+                      <p><?php echo round($arrOficinas[$i]['fax']); ?></p>
+                    </div>
+                  </div>
+                <?php endif ?>
+              </div>
+            </div>
+          <?php endfor ?>
+        </div>
+      <?php endif ?>
+      <?php if ($_POST['type'] === 'property' || !$_POST) : ?>
+        <div class="cards">
+          <?php for ($i = 0; $i < count($arrPropiedades); $i++) : ?>
+            <div class="card">
+              <div class="card-content">
+                <h4><?php echo $arrPropiedades[$i]['city']; ?></h4>
+                <div class="description">
+                  <p><?php echo $arrPropiedades[$i]['publicrewarks']; ?></p>
+                </div>
+                <?php if ($_POST['class'] === 'residencial' || !$_POST) : ?>
+                  <div class="caracteristics">
+                    <div class="bath">
+                      <img src="./img/bath-solid.svg" alt="Bath icon">
+                      <p><?php echo round($arrPropiedades[$i]['baths']); ?></p>
+                    </div>
+                    <div class="rooms">
+                      <img src="./img/bed-solid.svg" alt="Bedroom icon">
+                      <p><?php echo round($arrPropiedades[$i]['bedrooms']); ?></p>
+                    </div>
+                  </div>
+                <?php endif ?>
+                <div class="container-price">
+                  <?php if ($_POST['class'] === 'multifamily') : ?>
+                    <p>Desde :</p>
+                  <?php endif?>
+                  <h3 class="price">$ <?php echo $arrPropiedades[$i]['price'] ?></h3>
+                </div>
+              </div>
+            </div>
+          <?php endfor ?>
+        </div>
+      <?php endif ?>
+    </div>
+  </main>
+
+  <footer>
+
+  </footer>
+
+</body>
+
+</html>
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+<!-- Test 2 -->
+<?php
+
+$limit = '10';
+
+$classResidencial = 'A';
+$classMultifamily = 'B';
+$classLotsndLand = 'C';
+
+$typeProperty = 'Property';
+$typeOffice = 'Office';
+$urlResidencial = 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=' . $typeProperty . '&Class=' . $classResidencial . '&QueryType=DMQL2&Query=*&Count=1&Format=STANDARD-XML&StandardNames=0&RestrictedIndicator=****&Limit=' . $limit;
+
+if ($_POST) {
+  $limit = $_POST['limit'];
+  $urlResidencial = 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=' . $typeProperty . '&Class=' . $classResidencial . '&QueryType=DMQL2&Query=*&Count=1&Format=STANDARD-XML&StandardNames=0&RestrictedIndicator=****&Limit=' . $limit;
+}
+
+$urlMultifamily = 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=' . $typeProperty . '&Class=' . $classMultifamily . '&QueryType=DMQL2&Query=*&Count=1&Format=STANDARD-XML&StandardNames=0&RestrictedIndicator=****&Limit=' . $limit;
+$urlLotsndLand = 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=' . $typeProperty . '&Class=' . $classLotsndLand . '&QueryType=DMQL2&Query=*&Count=1&Format=STANDARD-XML&StandardNames=0&RestrictedIndicator=****&Limit=' . $limit;
+$urlOffice = 'http://retsgw.flexmls.com/rets2_3/Search?SearchType=' . $typeOffice . '&Class=Office&QueryType=DMQL2&Query=*&Count=1&Format=STANDARD-XML&StandardNames=0&RestrictedIndicator=****&Limit=' . $limit;
+
+$user = 'gcar.rets.Bliones';
+$password = 'vG(1n57vOw';
+
+//use function PHPSTORM_META\type;
+
+$title = 'Residential';
+$urlQuery = $urlResidencial;
+
+if ($_POST) {
+  if ($_POST['type'] === 'office') {
+    $title = 'Offices';
+    $urlQuery = $urlOffice;
+  } else {
+    switch ($_POST['class']) {
+      case 'residential':
+        $title = 'Residential';
+        $urlQuery = $urlResidencial;
+        break;
+      case 'multifamily':
+        $title = 'MultiFamily';
+        $urlQuery = $urlMultifamily;
+        break;
+      case 'lotndland':
+        $title = 'Lots & Land';
+        $urlQuery = $urlLotsndLand;
+        break;
+    }
+  }
+}
+
+
+//Fetch data
+$curl = curl_init($urlQuery);
+$headers = array(
+  "Content-Type: application/xml",
+  "Accept: application/xml",
+  "X-Requested-With: XMLHttpRequest",
+  "Access-Control-Allow-Origin: *"
+);
+
+$data = "<Request><Login>" . $user . "</Login><Password>" . $password . "</Password></Request>";
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
+curl_setopt($curl, CURLOPT_USERPWD, $user . ":" . $password);
+curl_setopt($curl, CURLOPT_URL, $urlQuery);
+curl_setopt($curl, CURLOPT_POST, true);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$resp = curl_exec($curl);
+$error = curl_error($curl);
+curl_close($curl);
+
+//data to array
+$xml = simplexml_load_string($resp);
+$xmlParseJSON = json_encode($xml);
+$arr = json_decode($xmlParseJSON, true);
+
+$arrPropiedades = [];
+$arrOficinas = [];
+$index = 0;
+
+//echo $arr['RETS'];
+
+//Case Default
+if (!$_POST) {
+  //Make Properties Array from Response
+  foreach ($arr as $k => $v) {
+    //echo "<pre>";print_r($v);echo "</pre>";
+    foreach ($v as $l => $val) {
+      foreach ($val as $key => $value) {
+        //echo "<pre>";print_r($value[0]);echo "</pre>";
+        foreach ($value as $llave => $valor) {
+          //echo "<pre>";print_r($valor['Listing']);echo "</pre>";
+          //echo "<pre>";echo $i;;echo "</pre>";echo "<pre>";print_r($value[$llave]);echo "</pre>";
+          //$arrPropiedades[$index] = $value[$llave];
+
+          //format data
+          $arrPropiedades[$index]['streetnumber'] = $value[$llave]['Listing']['StreetAddress']['StreetNumber'];
+          $arrPropiedades[$index]['streetname'] = $value[$llave]['Listing']['StreetAddress']['StreetName'];
+          $arrPropiedades[$index]['unitnumber'] = $value[$llave]['Listing']['StreetAddress']['UnitNumber'];
+          $arrPropiedades[$index]['city'] = $value[$llave]['Listing']['StreetAddress']['City'];
+          $arrPropiedades[$index]['postalcode'] = $value[$llave]['Listing']['StreetAddress']['PostalCode'];
+          $arrPropiedades[$index]['state'] = $value[$llave]['Listing']['StreetAddress']['State'];
+          $arrPropiedades[$index]['publicrewarks'] = $value[$llave]['Listing']['ListingData']['PublicRemarks'];
+          $arrPropiedades[$index]['price'] = $value[$llave]['Listing']['ListingData']['ListPrice'];
+          $arrPropiedades[$index]['county'] = $value[$llave]['Listing']['GeographicData']['County'];
+          $arrPropiedades[$index]['listid'] = $value[$llave]['Listing']['ListingID'];
+          $arrPropiedades[$index]['urlImage'] = 'https://retsgw.flexmls.com/rets2_3/GetObject?Type=Photo&Resource=Property&ID=' . $arrPropiedades[$index]['listid'] . ':2';
+          $arrPropiedades[$index]['bedrooms'] = $value[$llave]['Bedrooms'];
+          $arrPropiedades[$index]['baths'] = $value[$llave]['Baths']['BathsTotal'];
+          $arrPropiedades[$index]['heating'] = $value[$llave]['Heating'];
+          $arrPropiedades[$index]['cooling'] = $value[$llave]['Cooling'];
+          $arrPropiedades[$index]['extfeat'] = $value[$llave]['ExteriorFeatures'];
+          $arrPropiedades[$index]['typeroof'] = $value[$llave]['Roof'];
+          $arrPropiedades[$index]['typeext'] = $value[$llave]['Exterior'];
+          $index++;
+        }
+      }
+    }
+  }
+}
+
+if ($_POST) {
+  if ($_POST['type'] === 'office') {
+    foreach ($arr as $k => $v) {
+      foreach ($v as $l => $val) {
+        foreach ($val as $key => $value) {
+          foreach ($value as $llave => $valor) {
+            //format data
+            $arrOficinas[$index]['name'] = $value[$llave]['Name'];
+            $arrOficinas[$index]['phone'] = $value[$llave]['ContactInformation']['OfficePhone'];
+            $arrOficinas[$index]['fax'] = $value[$llave]['ContactInformation']['Fax'];
+            $arrOficinas[$index]['email'] = $value[$llave]['ContactInformation']['Email'];
+            $arrOficinas[$index]['street'] = $value[$llave]['StreetAddress']['Unstructured'];
+            $index++;
+          }
+        }
+      }
+    }
+  } else {
+    //Case Properties
+    //Make Properties Array from Response
+    foreach ($arr as $k => $v) {
+
+      foreach ($v as $l => $val) {
+        foreach ($val as $key => $value) {
+
+          foreach ($value as $llave => $valor) {
+
+            //format data
+            $arrPropiedades[$index]['streetnumber'] = $value[$llave]['Listing']['StreetAddress']['StreetNumber'];
+            $arrPropiedades[$index]['streetname'] = $value[$llave]['Listing']['StreetAddress']['StreetName'];
+            $arrPropiedades[$index]['unitnumber'] = $value[$llave]['Listing']['StreetAddress']['UnitNumber'];
+            $arrPropiedades[$index]['city'] = $value[$llave]['Listing']['StreetAddress']['City'];
+            $arrPropiedades[$index]['postalcode'] = $value[$llave]['Listing']['StreetAddress']['PostalCode'];
+            $arrPropiedades[$index]['state'] = $value[$llave]['Listing']['StreetAddress']['State'];
+            $arrPropiedades[$index]['publicrewarks'] = $value[$llave]['Listing']['ListingData']['PublicRemarks'];
+            $arrPropiedades[$index]['price'] = $value[$llave]['Listing']['ListingData']['ListPrice'];
+            $arrPropiedades[$index]['county'] = $value[$llave]['Listing']['GeographicData']['County'];
+
+            switch ($_POST['class']) {
+              case 'residential':
+                $arrPropiedades[$index]['bedrooms'] = $value[$llave]['Bedrooms'];
+                $arrPropiedades[$index]['baths'] = $value[$llave]['Baths']['BathsTotal'];
+                $arrPropiedades[$index]['heating'] = $value[$llave]['Heating'];
+                $arrPropiedades[$index]['cooling'] = $value[$llave]['Cooling'];
+                $arrPropiedades[$index]['extfeat'] = $value[$llave]['ExteriorFeatures'];
+                $arrPropiedades[$index]['typeroof'] = $value[$llave]['Roof'];
+                $arrPropiedades[$index]['typeext'] = $value[$llave]['Exterior'];
+                $arrPropiedades[$index]['listid'] = $value[$llave]['Listing']['ListingID'];
+                $arrPropiedades[$index]['urlImage'] = 'https://retsgw.flexmls.com/rets2_3/GetObject?Type=Photo&Resource=Property&ID=' . $arrPropiedades[$index]['listid'] . ':2';
+                break;
+              case 'multifamily':
+                //$arrPropiedades[$index]['bedrooms'] = $value[$llave]['Bedrooms'];
+                //$arrPropiedades[$index]['baths'] = $value[$llave]['Baths']['BathsTotal'];
+                $arrPropiedades[$index]['heating'] = $value[$llave]['Heating'];
+                $arrPropiedades[$index]['cooling'] = $value[$llave]['Cooling'];
+                $arrPropiedades[$index]['extfeat'] = $value[$llave]['ExteriorFeatures'];
+                $arrPropiedades[$index]['typeroof'] = $value[$llave]['Roof'];
+                $arrPropiedades[$index]['typeext'] = $value[$llave]['Exterior'];
+                break;
+              case 'lotndland':
+                $arrPropiedades[$index]['listid'] = $value[$llave]['Listing']['ListingID'];
+                $arrPropiedades[$index]['urlImage'] = 'https://retsgw.flexmls.com/rets2_3/GetObject?Type=Photo&Resource=Property&ID=' . $arrPropiedades[$index]['listid'] . ':2';
+                break;
+            }
+
+            $index++;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Yadi Rosales</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+</head>
+
+<body>
+  <header class="header">
+    <div class="mask"></div>
+    <div class="navbar-bg">
+      <div class="navbar container">
+        <img src="./img/logo_blanco_50.png" alt="Logotipo">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About me</a></li>
+          <li><a href="#">Testimonials</a></li>
+          <li><a href="#">Contact me</a></li>
+          <li><a href="#">Gallery</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="logo">
+      <img src="./img/logo_blanco_50.png" alt="Logotipo Yadi Rosales">
+    </div>
+  </header>
+
+
+  <main class="main container">
+    <div class="filters">
+      <h3>Filtros</h3>
+      <div class="container-form">
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+          <label for="limit">Limit</label>
+          <select name="limit">
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+          </select>
+          <label for="type">Type</label>
+          <select name="type">
+            <option value="property" selected>Properties</option>
+            <option value="office">Offices</option>
+          </select>
+          <label for="class">Class</label>
+          <select name="class">
+            <option value="residential" selected>Residential</option>
+            <option value="multifamily">MultiFamily</option>
+            <option value="lotsndland">Lots & Land</option>
+          </select>
+          <input type="submit" value="Search">
+        </form>
+      </div>
+    </div>
+    <div class="properties">
+      <h3><?php echo $title; ?></h3>
+      <?php if ($_POST['type'] === 'office') : ?>
+        <div class="cards">
+          <?php for ($i = 0; $i < count($arrOficinas); $i++) : ?>
+            <div class="card">
+              <div class="card-content">
+                <h4><?php echo $arrOficinas[$i]['name']; ?></h4>
+                <div class="description">
+                  <p><?php echo $arrOficinas[$i]['street']; ?></p>
+                </div>
+                <?php if ($_POST['class'] === 'residencial' || !$_POST) : ?>
+                  <div class="caracteristics">
+                    <div class="bath">
+                      <img src="./img/at-solid.svg" alt="Bath icon">
+                      <p><?php echo round($arrOficinas[$i]['email']); ?></p>
+                    </div>
+                    <div class="rooms">
+                      <img src="./img/fax-solid.svg" alt="Bedroom icon">
+                      <p><?php echo round($arrOficinas[$i]['fax']); ?></p>
+                    </div>
+                  </div>
+                <?php endif ?>
+              </div>
+            </div>
+          <?php endfor ?>
+        </div>
+      <?php endif ?>
+      <?php if ($_POST['type'] === 'property' || !$_POST) : ?>
+        <div class="cards">
+          <?php for ($i = 0; $i < count($arrPropiedades); $i++) : ?>
+            <div class="card">
+              <?php if ($_POST['class'] === 'residential' || $_POST['class'] === 'lotsndland') : ?>
+                <img src="<?php echo $arrPropiedades[$i]['urlImage']; ?>" alt="Image Thumbnail">
+              <?php endif ?>
+              <div class="card-content">
+                <h4><?php echo $arrPropiedades[$i]['city']; ?></h4>
+                <div class="description">
+                  <p><?php echo $arrPropiedades[$i]['publicrewarks']; ?></p>
+                </div>
+                <?php if ($_POST['class'] === 'residencial' || !$_POST) : ?>
+                  <div class="caracteristics">
+                    <div class="bath">
+                      <img src="./img/bath-solid.svg" alt="Bath icon">
+                      <p><?php echo round($arrPropiedades[$i]['baths']); ?></p>
+                    </div>
+                    <div class="rooms">
+                      <img src="./img/bed-solid.svg" alt="Bedroom icon">
+                      <p><?php echo round($arrPropiedades[$i]['bedrooms']); ?></p>
+                    </div>
+                  </div>
+                <?php endif ?>
+                <div class="container-price">
+                  <?php if ($_POST['class'] === 'multifamily') : ?>
+                    <p>Desde :</p>
+                  <?php endif ?>
+                  <h3 class="price">$ <?php echo $arrPropiedades[$i]['price'] ?></h3>
+                </div>
+              </div>
+            </div>
+          <?php endfor ?>
+        </div>
+      <?php endif ?>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="bg-black">
+      <div class="container content-footer">
+        <div class="colbank">
+          <img src="./img/logo_blanco_50.png" alt="Logotipo Yadi Rosales">
+          <img src="./img/Logo_151006_Pryor_Realty_Inc_HZ_W_MO.png" alt="Logotipo Coldwell Banker">
+        </div>
+        <div class="footer-info">
+          <div class="info-yadi">
+            <p>Yadi Rosales</p>
+            <p>Bilingual Realtor</p>
+            <p>COLDWELL BANKER PRYOR REALTY, INC.</p>
+            <p>2125 Hickory Valley Road</p>
+            <p>Chattanooga, TN 37421</p>
+          </div>
+          <div class="info-logos">
+            <img src="./img/equal-housing-opportunity.webp" alt="Equal Housing Logo">
+            <img src="./img/realtor.webp" alt="Realtor logo">
+          </div>
+          <div class="info-realty">
+            <p>Email: yadiholdsthekey@gmail.com</p>
+            <p>Cell: 423-710-6046</p>
+            <p>Office: 423-894-6762</p>
+            <p>EFAX: 423-826-8175</p>
+            <p>TN Lic. 323071</p>
+            <p>GA Lic. 345045</p>
+          </div>
+        </div>
+        <div class="footer-rigths">
+          <p>&copy; 2021 Coldwell Banker. All Rights Reserved.</p>
+          <p>Coldwell Banker and the Coldwell Banker logos are trademarks of Coldwell Banker Real Estate LLC. The Coldwell Banker ® System is comprised of company owned offices which are owned by a subsidiary of Realogy Brokerage Group LLC and franchised offices which are independently owned and operated.</p>
+          <p>The Coldwell Banker System fully supports the principles of the Fair Housing Act and the Equal Opportunity Act.</p>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="copy-bliones">
+        <p>&copy; 2022. Desarrollado por Bliones. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
+
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+
+
+<?php
+/* Require */
+
+date_default_timezone_set('America/New_York');
+
+require_once("vendor/autoload.php");
+
+//Config PHRets
+$config = new \PHRETS\Configuration;
+$config->setLoginUrl('http://retsgw.flexmls.com/rets2_3/Login')
+        ->setUsername('gcar.rets.Bliones')
+        ->setPassword('vG(1n57vOw')
+        ->setRetsVersion('1.7.2');
+
+$rets = new \PHRETS\Session($config);
+$connect = $rets->Login();
+
+//variable for data build/construct
+$dataConstruct = [];
+
+/* Variables */
+//without images
+$activeAgentsData = $rets->Search('ActiveAgent', 'Agent', '*', ['Limit' => 10]);
+$agentsData = $rets->Search('Agent', 'Agent', '*', ['Limit' => 10]);
+$officeData = $rets->Search('Office', 'Office', '*', ['Limit' => 10]);
+$unitData = $rets->Search('Unit', 'B', '*', ['Limit' => 10]);
+$roomData = $rets->Search('Room', 'A', '*', ['Limit' => 10]);
+
+//with images
+$openHouseData = $rets->Search('OpenHouse', 'OpenHouse', '*', ['Limit' => 10]);
+$aPropertyData = $rets->Search('Property', 'A', '*', ['Limit' => 10]);
+$bPropertyData = $rets->Search('Property', 'B', '*', ['Limit' => 10]);
+$cPropertyData = $rets->Search('Property', 'C', '*', ['Limit' => 10]);
+$dPropertyData = $rets->Search('Property', 'D', '*', ['Limit' => 10]);
+
+$all_ids = [];
+foreach ($aPropertyData as $record) {
+  $all_ids[] = $record['LIST_3'];
+}
+foreach ($bPropertyData as $record) {
+  $all_ids[] = $record['LIST_3'];
+}
+foreach ($cPropertyData as $record) {
+  $all_ids[] = $record['LIST_3'];
+}
+foreach ($dPropertyData as $record) {
+  $all_ids[] = $record['LIST_3'];
+}
+foreach ($openHouseData as $record) {
+  $all_ids[] = $record['LIST105'];
+}
+
+$uniqIds = array_unique($all_ids);
+//echo'<pre>';var_dump($all_ids);echo'</pre>';
+
+/* Return images results */
+$imagesID = [];
+foreach($uniqIds as $id){
+  $imagesData = $rets->GetObject('Property', 'Photo', $id, '*', 1);
+  $id_search = [];
+  foreach($imagesData as $key => $images){
+    //echo $imagesData[$key]->getLocation() . "\n";
+    $value = $imagesData[$key]->getLocation();
+    $id_search[] = $value;
+  }
+  
+  $imagesID[$id] = $id_search;
+}
+//echo $openHouseData->toJson();
+
+/* foreach(){
+    echo
+} */
+
+//echo'<pre>';var_dump($all_ids);echo'</pre>';
+//echo json_encode($imagesID);
+
+//build response
+
+/* $data = array(
+  'activeAgents' => $activeAgentsData->toArray(),
+  'agents' => $agentsData->toArray(),
+  'offices' => $officeData->toArray(),
+  'units' => $unitData->toArray(),
+  'rooms' => $roomData->toArray(),
+  'openHouse' => $openHouseData->toArray(),
+  'AProperties' => $aPropertyData->toArray(),
+  'BProperties' => $bPropertyData->toArray(),
+  'CProperties' => $cPropertyData->toArray(),
+  'DProperties' => $dPropertyData->toArray(),
+  'imagesURL' => $imagesID
+); */
+
+echo json_encode($data);
