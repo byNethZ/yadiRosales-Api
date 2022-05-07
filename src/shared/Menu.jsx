@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 function Menu() {
   return (
-    <nav className='nav-content'>
-      <Link className='buttons' to='/admin'>Admin</Link>
+    <nav className='nav-content container'>
       <Link className='buttons' to='/'>Open Houses</Link>
+      <Link className='buttons' to='/residential'>Properties</Link>
     </nav>
   )
 }

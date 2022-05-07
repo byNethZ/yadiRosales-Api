@@ -1,0 +1,59 @@
+.modal{
+    z-index: 20;
+    position: fixed;
+    top: 4rem;   
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.modal-content{
+    width: 95%;
+    margin: auto;
+    max-height: 90vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-bottom: 3rem;
+    
+}
+
+.modal-content .buttons{
+    position: absolute;
+    top: .5rem;
+    right: 2rem;
+}
+
+.flex-content{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    padding: 1rem;
+}
+.flex-content h3, .flex-content p{
+    text-align: left;
+    word-wrap: break-word;
+    width: 50%;
+}
+@media (min-width: 768px) {
+    .modal-content{
+        width: 65%;
+    }
+    .flex-content h3, .flex-content p{
+        width: 25%;
+    }
+}
+
+.public{
+    padding: 1rem;
+}
+.modal-info{
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.button-modal{
+    z-index: 30;
+}

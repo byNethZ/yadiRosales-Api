@@ -3,6 +3,10 @@ import Header from "./shared/Header";
 import Footer from "./shared/Footer";
 import Menu from "./shared/Menu";
 import OpenHouses from "./components/openhouses/OpenHouses";
+import Residential from "./components/properties/Residential";
+import Rental from "./components/properties/Rental";
+import Multifamily from "./components/properties/Multifamily";
+import Lots from "./components/properties/Lots";
 import Admin from "./components/admin/Admin";
 
 import { 
@@ -20,6 +24,10 @@ function App() {
         <Routes>
           <Route path="/" element={<OpenHouses />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/residential" element={<Residential />} />
+          <Route path="/multifamily" element={<Multifamily />} />
+          <Route path="/lots" element={<Lots />} />
+          <Route path="/rental" element={<Rental />} />
         </Routes>
       </Router>
       <Footer />

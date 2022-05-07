@@ -2,6 +2,10 @@ import React from "react";
 import "./Shared.css";
 
 function Footer() {
+  const moonLanding = new Date();
+
+  let year = moonLanding.getFullYear();
+
   return (
     <div className="Footer">
       <div className="bg-black">
@@ -57,7 +61,7 @@ function Footer() {
       <div className="container">
         <div className="copy-bliones">
           <p>
-            &copy; 2022. Desarrollado por Bliones. Todos los derechos
+            &copy; {year}. Desarrollado por <a className="blione" href="https://www.bliones.com/">Bliones</a>. Todos los derechos
             reservados.
           </p>
         </div>

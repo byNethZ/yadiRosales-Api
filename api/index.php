@@ -14,24 +14,44 @@ if($method == "OPTIONS") {
 /* Require */
 date_default_timezone_set('America/New_York');
 require_once("vendor/autoload.php");
+//require __DIR__ . '/vendor/autoload.php';
+
+
+use Bramus\Router;
+//$router = new Router();
 
 //use PHRETS\Configuration;
 $config = new  \PHRETS\Configuration;
+
 //Config PHRets
 $config->setLoginUrl('http://retsgw.flexmls.com/rets2_3/Login')
-  ->setUsername('gcar.rets.Bliones')
-  ->setPassword('vG(1n57vOw')
-  ->setRetsVersion('1.7.2');
+->setUsername('gcar.rets.Bliones')
+->setPassword('vG(1n57vOw')
+->setRetsVersion('1.7.2');
 $rets = new PHRETS\Session($config);
 $connect = $rets->Login();
 
-//variable for data build/construct
-$dataConstruct = [];
+  //variable for data build/construct
+  $dataConstruct = [];
+  
+  $data = [];
+  $all_ids = [];
+  $imagesID = [];
+  $data = [];
+  
+  
+  
+/* $router->get('/activeAgents', function() {
+  $config = new  \PHRETS\Configuration;
+  $rets = new PHRETS\Session($config);
+  $activeAgentsData = $rets->Search('ActiveAgent', 'Agent', '*', ['Limit' => 10]);
+  $response = ['data' => $activeAgentsData->toArray()];
 
-$data = [];
-$all_ids = [];
-$imagesID = [];
-$data = [];
+  echo json_encode($response);
+}); */
+
+
+
 
 //switch ($method) {
 switch ($_SERVER['REQUEST_URI']) {
@@ -133,3 +153,5 @@ if ($_GET['images']) {
 }
 
 echo json_encode($response);
+
+//$router->run();

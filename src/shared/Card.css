@@ -1,0 +1,33 @@
+.Card{
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+}
+@media (min-width:768px) {
+    .Card{
+        width: 45%;
+    }
+}
+@media (min-width:1024px) {
+    .Card{
+        width: 30%;
+    }
+}
+
+.image{
+    height: 18rem;
+    overflow: hidden;
+}
+
+.image .img{
+    height: 100%;
+}
+
+.image .img{
+    transition: all 0.2s ease-out ;
+}
+
+.image .img:hover{
+    transform: scale(1.05);
+}

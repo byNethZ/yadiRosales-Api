@@ -1,4 +1,5 @@
-const base_url = 'http://localhost:8080';
+//const base_url = 'http://localhost:8000';
+const base_url = 'http://server.yadirosalesrealtor.com';
 
 const requests = {
     fetchActiveAgents: `${base_url}/activeAgents`,
@@ -11,7 +12,8 @@ const requests = {
     fetchDProperties: `${base_url}/dproperties`,
     fetchRooms: `${base_url}/rooms`,
     fetchUnits: `${base_url}/units`,
-    fetchImagesUrl: `${base_url}/?images=`
+    fetchImagesUrl: `${base_url}/images/`,
+    fetchOneImageUrl: `${base_url}/image/`
 };
 
 export default requests;

@@ -10,37 +10,44 @@
     position: relative;
 }
 .navbar{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(17, 17, 17, 0.7);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 4rem;
-    z-index: 15;
+    display: none;
 }
-.navbar img{
-    width: 7rem;
-    height: 2.1rem;
-}
-.navbar ul{
-    display: flex;
-}
-.navbar ul li{
-    list-style: none;
-    margin-left: 2rem;
-}
-.navbar ul li:last-of-type{
-    margin-right: 2rem;
-}
-.navbar ul li a{
-    text-decoration: none;
-    color: rgb(201, 201, 201);
-}
-.navbar ul li a:hover{
-    color: #fff;
+@media (min-width: 768px) {
+    .navbar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(17, 17, 17, 0.7);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 4rem;
+        z-index: 15;
+    }
+    .navbar img{
+        width: 7rem;
+        height: 2.1rem;
+    }
+    .navbar ul{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .navbar ul li{
+        list-style: none;
+        margin-left: 2rem;
+    }
+    .navbar ul li:last-of-type{
+        margin-right: 2rem;
+    }
+    .navbar ul li a{
+        text-decoration: none;
+        color: rgb(201, 201, 201);
+    }
+    .navbar ul li a:hover{
+        color: #fff;
+    }
 }
 .mask{
     background: linear-gradient(180deg,rgba(17, 17, 17, 0), rgba(17, 17, 17, 0.8));
@@ -72,7 +79,7 @@
 .content-footer{
     margin: auto;
     padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding-bottom: 2rem;
 }
 .colbank{
     display: flex;
@@ -83,10 +90,17 @@
 }
 
 @media (min-width:768px) {
+    .footer-info{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem;
+    }
 }
 
 .colbank img{
-    width: 30rem;
+    width: 80%;
+    max-width: 30rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
@@ -98,11 +112,10 @@
 .copy-bliones p{
     display: block;
 }
-.footer-info{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 3rem;
+
+.footer-rigths p{
+    text-align: justify !important;
+    padding: 1rem;
 }
 
 /* Menu */
@@ -127,4 +140,17 @@
 }
 .buttons:hover{
     cursor: pointer;
+}
+
+/* Slider */
+
+.slider{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3rem;
+}
+
+.awssld__wrapper{
+    margin-left: auto;
+    margin-right: auto;
 }

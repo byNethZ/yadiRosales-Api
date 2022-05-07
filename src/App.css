@@ -36,3 +36,89 @@
     transform: rotate(360deg);
   }
 }
+
+
+@keyframes fadein {
+  0% {
+  opacity:0;
+  }
+  50%{
+  opacity:0.5;
+  }
+  100% {
+  opacity:1;
+  }
+}
+@keyframes fadeout {
+  0% {
+  opacity:1;
+  }
+  50%{
+  opacity:0.5;
+  }
+  100% {
+  opacity:0;
+  }
+}
+
+.visible{
+  animation: fadein 0.8s;
+  display: block;
+}
+.invisible{
+  animation: fadeout 0.5s;
+  display: none;
+}
+
+.charging{
+  width: 3rem;
+  margin: 3rem auto;
+}
+
+.mg-3{
+  margin: 1.5rem;
+}
+
+.container{
+  width: 95%;
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.awssld, .awssld--organic-arrows, .awssld__wrapper, .awssld__container, .awssld__box, .awssld--active, .awssld__content{
+  width: 95%;
+  height: auto;
+  max-width: 70rem;
+  max-height: 50rem;
+}
+
+.awssld__content > img{
+  object-fit: contain;
+}
+
+.ReactModal__Overlay, .ReactModal__Overlay--after-open{
+  background-color: rgba(255, 255, 255, 1) !important;
+}
+
+.margin-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.awssld__bullets{
+  width: 100%;
+}
+
+/* .awssld,
+.awssld div,
+.awssld nav{
+  margin-top: 0.5rem;
+  width: 90%
+} */
+
+.blione{
+  color: #0034c8;
+  text-decoration: none;
+  font-weight: bold;
+}

@@ -12,6 +12,7 @@
         }
     ],
     "require": {
-        "troydavisson/phrets": "2.*"
+        "troydavisson/phrets": "2.*",
+        "bramus/router": "~1.6"
     }
 }
