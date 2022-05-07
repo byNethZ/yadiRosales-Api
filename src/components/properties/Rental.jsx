@@ -157,7 +157,7 @@ function Rental() {
         />
         <h3 className={`${data.length === 0 && !charging ? "visible" : "invisible"}`} >No hay resultados</h3>
         {data.map((property) => (
-          <div key={property.EVENT0} className="Card">
+          <div key={property.LIST_3} className="Card">
             <Card id={property.LIST_3} />
             <h3>Street</h3>
             <p>{`${property.LIST_31}, ${property.LIST_34} ${property.LIST_37} ${property.LIST_35}`}</p>

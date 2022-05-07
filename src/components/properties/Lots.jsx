@@ -117,7 +117,7 @@ function Lots() {
         />
         <h3 className={`${data.length === 0 && !charging ? "visible" : "invisible"}`} >No hay resultados</h3>
         {data.map((property) => (
-          <div key={property.EVENT0} className="Card">
+          <div key={property.LIST_3} className="Card">
             <Card id={property.LIST_3} />
             <p>{property.listing_member_address}</p>
             <h3>{property.FEAT20151201165322685242000000}</h3>

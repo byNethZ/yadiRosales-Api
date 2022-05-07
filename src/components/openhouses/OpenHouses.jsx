@@ -78,7 +78,7 @@ function OpenHouses() {
           alt=""
         />
         {data.map((property) => (
-          <div key={property.EVENT0} className="Card">
+          <div key={property.LIST105} className="Card">
             <Card id={property.LIST105} />
             <h3>{property.ADD0}</h3>
             <h3>{property.ADD5}</h3>

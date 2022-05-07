@@ -160,8 +160,8 @@ function Residential() {
         />
         <h3 className={`${data.length === 0 && !charging ? "visible" : "invisible"}`} >No hay resultados</h3>
         {data.map((property) => (
-          <div key={property.LIST_0} className="Card">
-            <Card key={property.LIST_0} id={property.LIST_3} />
+          <div key={property.LIST_105} className="Card">
+            <Card id={property.LIST_105} />
             <h3>Street</h3>
             <p>{`${property.LIST_31}, ${property.LIST_34} ${property.LIST_37} ${property.LIST_35}`}</p>
             <p>{property.LIST_41}</p>
