@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #fafafa;
 }
 
 .App-logo {
@@ -75,13 +76,17 @@
   margin: 3rem auto;
 }
 
+.mt-2{
+  margin-top: 3rem;
+}
+
 .mg-3{
   margin: 1.5rem;
 }
 
 .container{
   width: 95%;
-  max-width: 75rem;
+  max-width: 90rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -121,4 +126,38 @@
   color: #0034c8;
   text-decoration: none;
   font-weight: bold;
+}
+
+.just-space-between{
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.padding-1{
+  padding: 1rem;
+}
+
+.text-left{
+  text-align: left;
+}
+.text-right{
+  text-align: right;
+}
+
+.border-bottom{
+  border-bottom: 1px solid #aaaaaa;
+}
+
+.bg-grey{
+  background-color: #ececec;
+}
+.mb-1{
+  margin-bottom: 1rem;
+}
+.justify-center{
+  justify-content: center;
 }

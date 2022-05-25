@@ -6,7 +6,7 @@ function Menu() {
   return (
     <nav className='nav-content container'>
       <Link className='buttons' to='/'>Open Houses</Link>
-      <Link className='buttons' to='/residential'>Properties</Link>
+      <Link className='buttons' to='/residential'>Residential</Link>
     </nav>
   )
 }

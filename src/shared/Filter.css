@@ -8,22 +8,66 @@
     border: 1px solid #aaa;
 }
 
-.filter select{
+/* .filter select{
     height: 1.5rem;
     border-radius: 0.5rem;
     background-color: #fff;
     border: 1px solid #aaa;
     width: 80%;
+} */
+.filter option{
+    background: white;
+    display: none;
+    margin: 0;
+    z-index: 1000;
+    position: absolute;
+    box-shadow: 0 0 2px 0 gray;
+    border-radius: 5px;
+    padding: 0;
+    display: flex;
+    /* gap: 0.8rem; */
+    color: #666666;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.8rem;
+  
+    transition: all 0.1s linear;
+}
+
+.filter select {
+    align-items: center;
+    background-color: #d11241;
+    border: none;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    letter-spacing: 1.1px;
+    display: flex;
+    align-items: center;
+    font-size: inherit;
+    padding: 0.8rem;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 0.8rem;
+    width: 8rem;
+    text-align: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.filters{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 @media (min-width:768px) {
     .filters{
-        display: flex;
         justify-content: space-around;
+        flex-direction:row;
         flex-wrap: wrap;
     }
     .filter{
-        width: 50%;
+        width: 25%;
         max-width: 15rem;
     }
 
@@ -32,5 +76,64 @@
     }
 }
 .buttons-filter{
-    margin-top: 1rem;
+    margin: 1rem;
+    border: none;
+    background-color: #d11241;
+    padding: 0.7rem;
+    list-style: none;
+    width: 8rem;
+    border-radius: 0.8rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+.buttons-filter:hover{
+    cursor: pointer;
+}
+
+.red-alert{
+    border-radius: 1.2rem;
+    border: 1px solid #fff;
+    padding: 1rem;
+}
+
+.filter-container{
+    background-color: #f0f0f0;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-button-filter{
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .filter{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem;
+    }
+
+    .filter-container{
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+}
+@media (min-width: 1024px) {
+
+    .filter-container{
+        flex-direction: initial;
+    }
+    .filters{
+        flex-wrap: nowrap;
+    }
 }

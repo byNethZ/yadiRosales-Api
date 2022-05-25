@@ -43,7 +43,7 @@ function Footer() {
             </div>
           </div>
           <div className="footer-rigths">
-            <p>&copy; 2021 Coldwell Banker. All Rights Reserved.</p>
+            <p>&copy; {year} Coldwell Banker. All Rights Reserved.</p>
             <p>
               Coldwell Banker and the Coldwell Banker logos are trademarks of
               Coldwell Banker Real Estate LLC. The Coldwell Banker ® System is

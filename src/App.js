@@ -9,15 +9,31 @@ import Multifamily from "./components/properties/Multifamily";
 import Lots from "./components/properties/Lots";
 import Admin from "./components/admin/Admin";
 
-import { 
-  BrowserRouter as Router, 
-  Routes, 
-  Route 
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Content from "./components/properties/Content";
+import Dropdown from "./shared/Dropdown";
 
 function App() {
   return (
     <div className="App">
+      <Header />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Residential />} />
+          <Route path="/multifamily" element={<Multifamily />} />
+          <Route path="/lots" element={<Lots />} />
+          <Route path="/rental" element={<Rental />} />
+          <Route path="/property" element={<Content />} />
+        </Routes>
+      </Router>
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
+
+/* 
       <Header />
       <Router>
         <Menu />
@@ -31,8 +47,5 @@ function App() {
         </Routes>
       </Router>
       <Footer />
-    </div>
-  );
-}
 
-export default App;
+*/

@@ -132,11 +132,12 @@
     padding: 0.7rem;
     list-style: none;
     width: 8rem;
-    border-radius: 1.2rem;
+    border-radius: 0.8rem;
     color: #fff;
     text-transform: uppercase;
     font-size: 0.8rem;
     text-decoration: none;
+    border: none;
 }
 .buttons:hover{
     cursor: pointer;
@@ -153,4 +154,8 @@
 .awssld__wrapper{
     margin-left: auto;
     margin-right: auto;
+}
+
+.info__search{
+    font-size: .8rem;
 }

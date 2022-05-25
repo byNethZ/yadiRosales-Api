@@ -13,12 +13,12 @@ function Navbar() {
       <img src="./img/logo_blanco_50.png" alt="Logotipo" />
       <BgDiv className={`initial ${clicked ? "active" : ""}`}></BgDiv>
       <div className={`links-container ${clicked ? "active" : ""}`}>
-        <a onClick={handleClick} href="https://yadirosalesrealtor.com/">Home</a>
-        <a onClick={handleClick} href="https://yadirosalesrealtor.com/about-me/">About me</a>
-        <a onClick={handleClick} href="https://yadirosalesrealtor.com/testimonials/">Testimonials</a>
-        <a onClick={handleClick} href="https://yadirosalesrealtor.com/gallery/">Gallery</a>
-        <a onClick={handleClick} href="https://yadirosalesrealtor.com/contact-me/">Contact me</a>
-        <a onClick={handleClick} href="https://yadirosalesrealtor.com/inicio/">Español</a>
+        <a href="https://yadirosalesrealtor.com/">Home</a>
+        <a href="https://yadirosalesrealtor.com/about-me/">About me</a>
+        <a href="https://yadirosalesrealtor.com/testimonials/">Testimonials</a>
+        <a href="https://yadirosalesrealtor.com/gallery/">Gallery</a>
+        <a href="https://yadirosalesrealtor.com/contact-me/">Contact me</a>
+        <a href="https://yadirosalesrealtor.com/inicio/">Español</a>
       </div>
       <div className="burger">
         <Burger clicked={clicked} handleClick={handleClick} />
@@ -108,9 +108,14 @@ const BgDiv = styled.div`
   border-top: 2px solid #0034c8;
   z-index: -1;
   transition: all 0.6s ease;
+  
+  @media (min-width: 768px) {
+    display: none;
+  }
+
   &.active {
     border-radius: 0 0 80% 0;
-    top: 4rem;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;

@@ -12,7 +12,7 @@ function Card(url) {
         .then(response => response.json())
         .then(info => {
           setUrlsImage(info.imageUrl)
-          //console.log(info.imageUrl);
+          //console.log(info);
           setCharging(false);
         });
       }
@@ -21,8 +21,10 @@ function Card(url) {
 
   return (
     <div className='image'>
+      <div className="bg-gradient"></div>
         <img className={`${charging === true? 'visible' : 'invisible'} charging`} src='img/charging.gif' alt=''/>
-        <img className={`${charging === false? 'visible' : 'invisible'} img`} src={urlsImage} alt='' />
+        <img className={`${charging === false? 'visible' : 'invisible'} img`} src={urlsImage ? urlsImage : 'img/No_image_available.svg' } alt='' />
+        <p className="price">$ {url.price.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</p>
     </div>
   )
 }

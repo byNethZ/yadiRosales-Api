@@ -46,7 +46,7 @@ function Galeria(property) {
   return (
     <div className="modalcomponet">
       <button className="buttons" onClick={openModal}>
-        Ver galeria
+        See Gallery
       </button>
       <Modal
         className="modal width-10"
@@ -57,7 +57,7 @@ function Galeria(property) {
         contentLabel="PropertyModal"
       >
         <div className="modal-content">
-          <button className="buttons button-modal" onClick={closeModal}>
+          <button className="buttons button-modal button-close" onClick={closeModal}>
             close
           </button>
           <img

@@ -4,27 +4,50 @@ import "./../openhouses/OpenHouses.css";
 import "../../shared/Card.css";
 import "../../shared/Shared.css";
 import Card from "../../shared/Card";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import ModalComponent from "../../shared/Modal";
 import "./../../shared/Filter.css";
+import Dropdown from "../../shared/Dropdown";
+import Content from "./Content";
 
 function Residential() {
+  const items = [
+    {
+      slug: "/",
+      anchor: "Residential",
+    },
+    {
+      slug: "/multifamily",
+      anchor: "Multifamily",
+    },
+    {
+      slug: "/rental",
+      anchor: "Rental",
+    },
+    {
+      slug: "/lots",
+      anchor: "Lots & Lands",
+    },
+  ];
+
+  const [error, setError] = useState(false);
   const [charging, setCharging] = useState(true);
   const [data, setData] = useState([]);
   const [result, setResult] = useState([]); //static tableusers
   const [search, setSearch] = useState("");
   const [valueInputMin, setValueInputMin] = useState("");
   const [valueInputMax, setValueInputMax] = useState("");
-  const [citiesArray, setCitiesArray] = useState([])
+  const [citiesArray, setCitiesArray] = useState([]);
 
-
-  const citySelect = document.getElementById('city');
-  const bedsSelect = document.getElementById('beds');
-  const bathsSelect = document.getElementById('baths');
-  const priceMaxSelect = document.getElementById('maxPrice');
+  const citySelect = document.getElementById("city");
+  const bedsSelect = document.getElementById("beds");
+  const bathsSelect = document.getElementById("baths");
+  const priceMinSelect = document.getElementById("minPrice");
+  const priceMaxSelect = document.getElementById("maxPrice");
   let cityValue = "";
   let bedsValue = "";
   let bathsValue = "";
+  let priceMinValue = "";
   let priceMaxValue = "";
   let citiesCont = [];
   // let valueInputMin = '';
@@ -35,47 +58,78 @@ function Residential() {
       const req = await fetch(requests.fetchAProperties)
         .then((response) => response.json())
         .then((info) => {
-          setData(info.data);
-          setResult(info.data);
-          getCities(info.data);
-          //console.log(info.data);
-          setCharging(false);
+          fixData(info.data);
         });
     }
     fetchData();
   }, []);
 
+  const fixData = (dataInfo) => {
+    let array = dataInfo;
+    var hash = {};
+    array = array.filter(function (current) {
+      var exists = !hash[current.LIST_105];
+      hash[current.LIST_105] = true;
+      return exists;
+    });
+
+    // console.log(dataInfo);
+    console.log(array);
+
+    setData(array);
+    setResult(array);
+    getCities(array);
+    setCharging(false);
+  };
+
   const getCities = (array) => {
     array.forEach((prop) => {
-      if(!citiesCont.includes(prop.LIST_39)){
+      if (!citiesCont.includes(prop.LIST_39)) {
         citiesCont.push(prop.LIST_39);
       }
-    })
-    setCitiesArray(citiesCont)
-  }
+    });
+    setCitiesArray(citiesCont);
+  };
 
   const handleChange = (e) => {
+    verifyPrice();
     cityValue = citySelect.value;
-    bedsValue = bedsSelect.value;
-    bathsValue = bathsSelect.value;
-    priceMaxValue = priceMaxSelect.value;
-    searchChange(cityValue, bedsValue, bathsValue, priceMaxValue);
-    }
+    bedsValue = bedsSelect.value ? bedsSelect.value : 0;
+    bathsValue = bathsSelect.value ? bathsSelect.value : 0;
+    priceMinValue = priceMinSelect.value ? priceMinSelect.value : 0;
+    priceMaxValue = priceMaxSelect.value
+      ? priceMaxSelect.value
+      : 9999999999999999;
+    searchChange(
+      cityValue,
+      bedsValue,
+      bathsValue,
+      priceMinValue,
+      priceMaxValue
+    );
+  };
 
-  const searchChange = (city, beds, baths, priceMaxValue) => {
+  const searchChange = (city, beds, baths, priceMinValue, priceMaxValue) => {
     var filteredData = result
       .filter((element) => {
-        return element.LIST_39.toString().toLowerCase().includes(city.toLowerCase());
+        return element.LIST_39.toString()
+          .toLowerCase()
+          .includes(city.toLowerCase());
       })
       .filter((element) => {
-        return element.LIST_66.toString().toLowerCase().includes(beds.toLowerCase());
+        return parseInt(element.LIST_66) >= parseInt(beds);
+        //console.log(parseInt(element.LIST_66));
       })
       .filter((element) => {
-        var bathsNumber = Math.floor(element.LIST_67);
-        return bathsNumber.toString().toLowerCase().includes(baths.toLowerCase());
+        var bathsNumber = Math.round(element.LIST_67);
+        //return bathsNumber.toString().toLowerCase().includes(baths.toLowerCase());
+        return bathsNumber >= parseInt(baths);
       })
       .filter((element) => {
-        return parseInt(element.LIST_22) <= parseInt(priceMaxValue)
+        return parseInt(element.LIST_22) >= parseInt(priceMinValue);
+      })
+      .filter((element) => {
+        return parseInt(element.LIST_22) <= parseInt(priceMaxValue);
       });
     setData(filteredData);
   };
@@ -83,73 +137,100 @@ function Residential() {
   const resetData = () => {
     setData(result);
   };
-  
-  const showRangeMax = (evt) => {
-    setValueInputMax(evt.target.value)
-  }
+
+  const verifyPrice = () => {
+    if (parseInt(priceMinSelect.value) > parseInt(priceMaxSelect.value)) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  };
 
   return (
     <div className="container">
       <h2>Residential</h2>
-      <nav className="nav-content">
-        <Link className="buttons mg-3" to="/multifamily">
-          Multifamily
-        </Link>
-        <Link className="buttons mg-3" to="/rental">
-          Rental
-        </Link>
-        <Link className="buttons mg-3" to="/lots">
-          Lands
-        </Link>
-      </nav>
-      <div className="filters">
-        <div className="filter">
-          <h3>Search for homes</h3>
-          <select id="city" ref={citySelect}>
-            <option value="" selected disabled hidden>
-              City
-            </option>
-            {citiesArray.map((city, index) => (
-              <option value={city} >{city}</option>
-            ))}
-          </select>
-        </div>
-        <div className="filter">
-          <h3>Beds</h3>
-          <select id="beds" ref={bedsSelect}>
-            <option value="" selected disabled hidden>
-              Beds
-            </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-        <div className="filter">
-          <h3>Baths</h3>
-          <select id="baths" ref={bathsSelect}>
-            <option value="" selected disabled hidden>
-              Baths
-            </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-        <div className="filter">
-          <h3>Max Price</h3>
-          <input type="range" min='0' max='200000' name="maxPrice" id="maxPrice" onChange={showRangeMax}/>
-          <h5>$ {valueInputMax? valueInputMax: '0'}.00</h5>
-        </div>
-        <div>
-          <button className="buttons buttons-filter" onClick={handleChange}>Search</button>
-        </div>
-        <div>
-          <button className="buttons buttons-filter" onClick={resetData}>Reset</button>
+      {error ? (
+        <p>The Min Price field cannot be greater than the Max Price field </p>
+      ) : (
+        ""
+      )}
+      <div className="filter-container">
+        <div className="filters">
+          <div className="filter">
+            <Dropdown className="mt-2" dropdownTitle="Types" items={items} />
+          </div>
+          <div className="filter">
+            <select id="city" ref={citySelect} onChange={handleChange}>
+              <option value="" selected>
+                City
+              </option>
+              {citiesArray.map((city, index) => (
+                <option value={city}>{city}</option>
+              ))}
+            </select>
+          </div>
+          <div className="filter">
+            <select id="beds" ref={bedsSelect} onChange={handleChange}>
+              <option value="" selected>
+                Beds
+              </option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div className="filter">
+            <select id="baths" ref={bathsSelect} onChange={handleChange}>
+              <option value="" selected>
+                Baths
+              </option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div className="filter">
+            <select id="minPrice" onChange={handleChange}>
+              <option value="" selected>
+                Min Price
+              </option>
+              <option value="500">$ 500.00 </option>
+              <option value="1000">$1 K</option>
+              <option value="2000">$ 2 K</option>
+              <option value="5000">$ 5 K</option>
+              <option value="10000">$ 10 K</option>
+              <option value="20000">$ 20 K</option>
+              <option value="50000">$ 50 K</option>
+              <option value="100000">$ 100 K</option>
+              <option value="200000">$ 200 K</option>
+              <option value="300000">$ 300 K</option>
+              <option value="500000">$ 500 K</option>
+              <option value="1000000">$ 1 M</option>
+            </select>
+          </div>
+          <div className={`filter ${error ? "red-alert" : ""} `}>
+            <select id="maxPrice" onChange={handleChange}>
+              <option value="" selected>
+                Max Price
+              </option>
+              <option value="500">$ 500.00 </option>
+              <option value="1000">$1 K</option>
+              <option value="2000">$ 2 K</option>
+              <option value="5000">$ 5 K</option>
+              <option value="10000">$ 10 K</option>
+              <option value="20000">$ 20 K</option>
+              <option value="50000">$ 50 K</option>
+              <option value="100000">$ 100 K</option>
+              <option value="200000">$ 200 K</option>
+              <option value="300000">$ 300 K</option>
+              <option value="500000">$ 500 K</option>
+              <option value="1000000">$ 1 M</option>
+            </select>
+          </div>
         </div>
       </div>
       <div className="OpenHouses">
@@ -158,22 +239,37 @@ function Residential() {
           src="img/charging.gif"
           alt=""
         />
-        <h3 className={`${data.length === 0 && !charging ? "visible" : "invisible"}`} >No hay resultados</h3>
+        <h3
+          className={`${
+            data.length === 0 && !charging ? "visible" : "invisible"
+          }`}
+        >
+          No results
+        </h3>
         {data.map((property) => (
           <div key={property.LIST_105} className="Card">
-            <Card id={property.LIST_105} />
-            <h3>Street</h3>
-            <p>{`${property.LIST_31}, ${property.LIST_34} ${property.LIST_37} ${property.LIST_35}`}</p>
-            <p>{property.LIST_41}</p>
-            <h3>{property.LIST_39}</h3>
-            <h4>{`${property.LIST_40} ${property.LIST_43}`}</h4>
-            <p>{property.GF20141117181045021105000000}</p>
-            <h4>{property.GF20141105190355983445000000}</h4>
-            <div className="admin">
-              <h4>List Price</h4>
-              <p>{property.LIST_22}</p>
+            <Card id={property.LIST_105} price={property.LIST_22} />
+            <p>
+              {property.LIST_41} | {property.LIST_39}
+            </p>
+            <div className="description">
+              <div>
+                <p>{property.LIST_66}</p>
+                <img src="img/bed.png" srcSet="img/bed-solid.svg" alt="beds" />
+              </div>
+              <div>
+                <p>{Math.round(property.LIST_67)}</p>
+                <img
+                  src="img/bath.png"
+                  srcSet="img/bath-solid.svg"
+                  alt="baths"
+                />
+              </div>
+              <p className="desc-level">
+                {property.GF20141105190204376686000000}
+              </p>
             </div>
-            <ModalComponent property={property} />
+            <ModalComponent property={property} type="residencial" />
           </div>
         ))}
       </div>
@@ -195,4 +291,15 @@ export default Residential;
           Rental
         </Link>
       </nav>
+
+
+      {`${property.LIST_31}, ${property.LIST_34} ${property.LIST_37} ${property.LIST_35}`}
+
+                <div className="container-button-filter">
+            <button className="buttons-filter" onClick={handleChange}>
+              Search
+            </button>
+          </div>
+
+          <ModalComponent property={property} />
 */

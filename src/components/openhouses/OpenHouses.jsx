@@ -6,8 +6,31 @@ import "../../shared/Shared.css";
 import Card from "../../shared/Card";
 import Galeria from "../../shared/Galeria";
 import "./../../shared/Filter.css";
+import Dropdown from "../../shared/Dropdown";
 
 function OpenHouses() {
+  const items = [
+    {
+      slug: "/residential",
+      anchor: "Residential"
+    },
+    {
+      slug: "/multifamily",
+      anchor: "Multifamily"
+    },
+    {
+      slug: "/rental",
+      anchor: "Rental"
+    },
+    {
+      slug: "/lots",
+      anchor: "Lots & Lands"
+    },
+    {
+      slug: "/",
+      anchor: "Open Houses"
+    }
+  ];
   const [charging, setCharging] = useState(true);
   const [data, setData] = useState([]); //dinamic users
   const [result, setResult] = useState([]); //static tableusers
@@ -23,16 +46,31 @@ function OpenHouses() {
       const req = await fetch(request.fetchOpenHouses)
         .then((response) => response.json())
         .then((info) => {
-          setData(info.data);
-          setResult(info.data);
-          getCities(info.data);
-          //console.log(info.data);
-          setCharging(false);
+          fixData(info.data);
         });
     }
     fetchData();
   }, []);
 
+  const fixData = (dataInfo) => {
+    let array = dataInfo;
+    var hash = {};
+    array = array.filter(function (current) {
+      var exists = !hash[current.LIST105];
+      hash[current.LIST105] = true;
+      return exists;
+    });
+
+    //console.log(dataInfo);
+    //console.log(array);
+
+    setData(array);
+    setResult(array);
+    getCities(array);
+    setCharging(false);
+  };
+
+  //get Cities from dataInfo
   const getCities = (array) => {
     array.forEach((prop) => {
       if (!citiesCont.includes(prop.ADD5)) {
@@ -43,8 +81,9 @@ function OpenHouses() {
   };
 
   const handleChangeCity = (e) => {
-    setSearch(e.target.value);
+    //setSearch(e.target.value);
     searchCity(e.target.value);
+    //console.log(e.target.value);
   };
 
   const searchCity = (query) => {
@@ -59,10 +98,12 @@ function OpenHouses() {
   return (
     <div className="container">
       <h2>Open Houses</h2>
+      <div className="filter-container">
+      <Dropdown className="mt-2" dropdownTitle="Types" items={items} />
       <div className="filters">
         <div className="filter">
           <select id="city" onChange={handleChangeCity}>
-            <option value="" selected disabled hidden>
+            <option value="" selected>
               City
             </option>
             {citiesArray.map((city, index) => (
@@ -70,6 +111,7 @@ function OpenHouses() {
             ))}
           </select>
         </div>
+      </div>
       </div>
       <div className="OpenHouses">
         <img
