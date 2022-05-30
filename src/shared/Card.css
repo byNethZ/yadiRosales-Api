@@ -73,7 +73,7 @@ background: linear-gradient(180deg, rgba(110,75,152,0) 0%, rgba(12,8,17,0.3) 85%
     align-items: center;
 }
 .desc-level{
-    width: 6rem;
+    width: 10rem;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

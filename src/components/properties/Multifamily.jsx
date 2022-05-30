@@ -129,65 +129,67 @@ function Multyfamily() {
 
   return (
     <div className="container">
-      <h2>Multifamily</h2>
-      {error ? (
-        <p>The Min Price field cannot be greater than the Max Price field </p>
-      ) : (
-        ""
-      )}
-      <div className="filter-container">
-        <div className="filters">
-          <div className="filter">
-            <Dropdown className="mt-2" dropdownTitle="Types" items={items} />
-          </div>
-          <div className="filter">
-            <select id="city" ref={citySelect} onChange={handleChange}>
-              <option value="" selected>
-                City
-              </option>
-              {citiesArray.map((city, index) => (
-                <option value={city}>{city}</option>
-              ))}
-            </select>
-          </div>
-          <div className="filter">
-            <select id="unit" ref={unitSelect} onChange={handleChange}>
-              <option value="" selected>
-                Units
-              </option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="10">10</option>
-            </select>
-          </div>
-          <div className="filter">
-            <select id="minPrice" onChange={handleChange}>
-              <option value="" selected>
-                Min Price
-              </option>
-              <option value="50000">$ 50 K</option>
-              <option value="100000">$ 100 K</option>
-              <option value="200000">$ 200 K</option>
-              <option value="300000">$ 300 K</option>
-              <option value="500000">$ 500 K</option>
-              <option value="1000000">$ 1 M</option>
-            </select>
-          </div>
-          <div className={`filter ${error ? "red-alert" : ""} `}>
-            <select id="maxPrice" onChange={handleChange}>
-              <option value="" selected>
-                Max Price
-              </option>
-              <option value="50000">$ 50 K</option>
-              <option value="100000">$ 100 K</option>
-              <option value="200000">$ 200 K</option>
-              <option value="300000">$ 300 K</option>
-              <option value="500000">$ 500 K</option>
-              <option value="1000000">$ 1 M</option>
-            </select>
+      <div className="container-title-filters">
+        <h2>Multifamily</h2>
+        {error ? (
+          <p>The Min Price field cannot be greater than the Max Price field </p>
+        ) : (
+          ""
+        )}
+        <div className="filter-container">
+          <div className="filters">
+            <div className="filter">
+              <Dropdown className="mt-2" dropdownTitle="Types" items={items} />
+            </div>
+            <div className="filter">
+              <select id="city" ref={citySelect} onChange={handleChange}>
+                <option value="" selected>
+                  City
+                </option>
+                {citiesArray.map((city, index) => (
+                  <option value={city}>{city}</option>
+                ))}
+              </select>
+            </div>
+            <div className="filter">
+              <select id="unit" ref={unitSelect} onChange={handleChange}>
+                <option value="" selected>
+                  Units
+                </option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+            <div className="filter">
+              <select id="minPrice" onChange={handleChange}>
+                <option value="" selected>
+                  Min Price
+                </option>
+                <option value="50000">$ 50 K</option>
+                <option value="100000">$ 100 K</option>
+                <option value="200000">$ 200 K</option>
+                <option value="300000">$ 300 K</option>
+                <option value="500000">$ 500 K</option>
+                <option value="1000000">$ 1 M</option>
+              </select>
+            </div>
+            <div className={`filter ${error ? "red-alert" : ""} `}>
+              <select id="maxPrice" onChange={handleChange}>
+                <option value="" selected>
+                  Max Price
+                </option>
+                <option value="50000">$ 50 K</option>
+                <option value="100000">$ 100 K</option>
+                <option value="200000">$ 200 K</option>
+                <option value="300000">$ 300 K</option>
+                <option value="500000">$ 500 K</option>
+                <option value="1000000">$ 1 M</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -216,7 +218,7 @@ function Multyfamily() {
                 <img src="img/unit.png" alt="units" />
               </div>
               <p className="desc-level">
-                {property.GF20141111181915289784000000}
+                {`${parseInt(property.LIST_48)} sqft`}
               </p>
             </div>
             <ModalComponent property={property} type="multifamily" />

@@ -145,78 +145,80 @@ function Rental() {
 
   return (
     <div className="container">
-      <h2>Rental</h2>
-      {error ? (
-        <p>The Min Price field cannot be greater than the Max Price field </p>
-      ) : (
-        ""
-      )}
-      <div className="filter-container">
-        <div className="filters">
-          <div className="filter">
-            <Dropdown className="mt-2" dropdownTitle="Types" items={items} />
-          </div>
-          <div className="filter">
-            <select id="city" ref={citySelect} onChange={handleChange}>
-              <option value="" selected>
-                City
-              </option>
-              {citiesArray.map((city, index) => (
-                <option value={city}>{city}</option>
-              ))}
-            </select>
-          </div>
-          <div className="filter">
-            <select id="beds" ref={bedsSelect} onChange={handleChange}>
-              <option value="" selected>
-                Beds
-              </option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-          </div>
-          <div className="filter">
-            <select id="baths" ref={bathsSelect} onChange={handleChange}>
-              <option value="" selected>
-                Baths
-              </option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-          </div>
-          <div className="filter">
-            <select id="minPrice" onChange={handleChange}>
-              <option value="" selected>
-                Min Price
-              </option>
-              <option value="500">$ 500.00 </option>
-              <option value="1000">$1 K</option>
-              <option value="1500">$1.5 K</option>
-              <option value="2000">$ 2 K</option>
-              <option value="2500">$ 2.5 K</option>
-              <option value="3000">$ 3 K</option>
-              <option value="3500">$ 3.5 K</option>
-            </select>
-          </div>
-          <div className={`filter ${error ? "red-alert" : ""} `}>
-            <select id="maxPrice" onChange={handleChange}>
-              <option value="" selected>
-                Max Price
-              </option>
-              <option value="500">$ 500.00 </option>
-              <option value="1000">$1 K</option>
-              <option value="1500">$1.5 K</option>
-              <option value="2000">$ 2 K</option>
-              <option value="2500">$ 2.5 K</option>
-              <option value="3000">$ 3 K</option>
-              <option value="3500">$ 3.5 K</option>
-            </select>
+      <div className="container-title-filters">
+        <h2>Rental</h2>
+        {error ? (
+          <p>The Min Price field cannot be greater than the Max Price field </p>
+        ) : (
+          ""
+        )}
+        <div className="filter-container">
+          <div className="filters">
+            <div className="filter">
+              <Dropdown className="mt-2" dropdownTitle="Types" items={items} />
+            </div>
+            <div className="filter">
+              <select id="city" ref={citySelect} onChange={handleChange}>
+                <option value="" selected>
+                  City
+                </option>
+                {citiesArray.map((city, index) => (
+                  <option value={city}>{city}</option>
+                ))}
+              </select>
+            </div>
+            <div className="filter">
+              <select id="beds" ref={bedsSelect} onChange={handleChange}>
+                <option value="" selected>
+                  Beds
+                </option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div className="filter">
+              <select id="baths" ref={bathsSelect} onChange={handleChange}>
+                <option value="" selected>
+                  Baths
+                </option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div className="filter">
+              <select id="minPrice" onChange={handleChange}>
+                <option value="" selected>
+                  Min Price
+                </option>
+                <option value="500">$ 500.00 </option>
+                <option value="1000">$1 K</option>
+                <option value="1500">$1.5 K</option>
+                <option value="2000">$ 2 K</option>
+                <option value="2500">$ 2.5 K</option>
+                <option value="3000">$ 3 K</option>
+                <option value="3500">$ 3.5 K</option>
+              </select>
+            </div>
+            <div className={`filter ${error ? "red-alert" : ""} `}>
+              <select id="maxPrice" onChange={handleChange}>
+                <option value="" selected>
+                  Max Price
+                </option>
+                <option value="500">$ 500.00 </option>
+                <option value="1000">$1 K</option>
+                <option value="1500">$1.5 K</option>
+                <option value="2000">$ 2 K</option>
+                <option value="2500">$ 2.5 K</option>
+                <option value="3000">$ 3 K</option>
+                <option value="3500">$ 3.5 K</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -252,6 +254,9 @@ function Rental() {
                   alt="baths"
                 />
               </div>
+              <p className="desc-level">
+                {`${parseInt(property.LIST_48)} sqft`}
+              </p>
             </div>
             <ModalComponent property={property} type="rental" />
           </div>

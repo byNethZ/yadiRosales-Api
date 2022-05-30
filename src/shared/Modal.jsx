@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import Modal from "react-modal";
 import "./Shared.css";
 import "./ModalComponent.css";
@@ -7,15 +7,34 @@ import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import Map from "./Map";
+import credentials from "./../credentials";
+
+//const Modal = lazy(() => import('react-modal'));
+
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
 function ModalComponent(property) {
   let type = property.type;
   let info = property.property;
-  console.log(info);
 
   let id = info.LIST_3 ? info.LIST_3 : info.LIST105;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  console.log(info);
+
+  //let modalIsOpen = property.modalIsOpen;
+  //let afterOpenModal = property.afterOpenModal;
+  //let closeModal = property.closeModal;
+
+  const [charging, setCharging] = useState(true);
+  const [urlsImage, setUrlsImage] = useState([]);
+
+  //const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  // const [closeModal, setIsClose] = React.useState(property.closeModal);
+  // const [modalIsOpen, setIsOpen] = React.useState(property.modalIsOpen);
+
+  
+  //last code
+    const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -29,9 +48,8 @@ function ModalComponent(property) {
   function closeModal() {
     setIsOpen(false);
   }
+ 
 
-  const [charging, setCharging] = useState(true);
-  const [urlsImage, setUrlsImage] = useState([]);
   useEffect(() => {
     async function fetchData() {
       const req = await fetch(`${requests.fetchImagesUrl}${id}`)
@@ -72,7 +90,7 @@ function ModalComponent(property) {
             className="buttons button-modal button-close"
             onClick={closeModal}
           >
-            close
+            X
           </button>
           <img
             className={`${
@@ -106,7 +124,7 @@ function ModalComponent(property) {
               </div>
             </div>
             <div className="un-tercio">
-              <div className="table">
+              <div className="table table-principal-features">
                 <div className="una-celda text-center border-bottom">
                   <h3 className="price-table">
                     $ {info.LIST_22.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
@@ -126,40 +144,40 @@ function ModalComponent(property) {
                     </p>
                   </div>
                 </div>
-                <div className="una-celda just-space-between padding-1 bg-grey">
+                <div className="una-celda just-space-between padding-05 bg-grey">
                   <h3>Subdivision:</h3>
                   <p>{info.LIST_77}</p>
                 </div>
-                <div className="una-celda just-space-between padding-1">
+                <div className="una-celda just-space-between padding-05">
                   <h3>Type:</h3>
                   <p>{info.LIST_9}</p>
                 </div>
-                <div className="una-celda just-space-between padding-1 bg-grey">
+                <div className="una-celda just-space-between padding-05 bg-grey">
                   <h3>Built:</h3>
                   <p>{info.LIST_53}</p>
                 </div>
-                <div className="una-celda just-space-between padding-1">
+                <div className="una-celda just-space-between padding-05">
                   <h3>County:</h3>
                   <p>{info.LIST_41}</p>
                 </div>
-                <div className="una-celda just-space-between padding-1 bg-grey">
+                <div className="una-celda just-space-between padding-05 bg-grey">
                   <h3>State:</h3>
                   <p>{info.LIST_40}</p>
                 </div>
               </div>
-              <div className="table">
+              <div className="table table-principal-features">
                 <div className="una-celda text-center">
                   <h3>School Information</h3>
                 </div>
-                <div className="una-celda just-space-between padding-1 bg-grey">
+                <div className="una-celda just-space-between padding-05 bg-grey">
                   <h3>Elementary School:</h3>
                   <p>{info.LIST_93}</p>
                 </div>
-                <div className="una-celda just-space-between padding-1">
+                <div className="una-celda just-space-between padding-05">
                   <h3>Middle School:</h3>
                   <p>{info.LIST_94}</p>
                 </div>
-                <div className="una-celda just-space-between padding-1 bg-grey">
+                <div className="una-celda just-space-between padding-05 bg-grey">
                   <h3>High School:</h3>
                   <p>{info.LIST_95}</p>
                 </div>
@@ -515,7 +533,11 @@ function ModalComponent(property) {
             </div>
           </div>
           <div className="modal-container justify-center">
-            <Map lat={info.LIST_46} long={info.LIST_47} />
+            <Map
+              lat={info.LIST_46}
+              long={info.LIST_47}
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${credentials.mapsKey}&callback=useJsApiLoader`}
+            />
           </div>
         </div>
       </Modal>

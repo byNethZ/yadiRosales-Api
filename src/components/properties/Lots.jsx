@@ -12,20 +12,20 @@ function Lots() {
   const items = [
     {
       slug: "/",
-      anchor: "Residential"
+      anchor: "Residential",
     },
     {
       slug: "/multifamily",
-      anchor: "Multifamily"
+      anchor: "Multifamily",
     },
     {
       slug: "/rental",
-      anchor: "Rental"
+      anchor: "Rental",
     },
     {
       slug: "/lots",
-      anchor: "Lots & Lands"
-    }
+      anchor: "Lots & Lands",
+    },
   ];
 
   const [error, setError] = useState(false);
@@ -86,9 +86,7 @@ function Lots() {
   const handleChange = (e) => {
     verifyPrice();
     cityValue = citySelect.value;
-    priceMinValue = priceMinSelect.value
-    ? priceMinSelect.value
-    : 0;
+    priceMinValue = priceMinSelect.value ? priceMinSelect.value : 0;
     priceMaxValue = priceMaxSelect.value
       ? priceMaxSelect.value
       : 999999999999999;
@@ -115,57 +113,63 @@ function Lots() {
     setData(result);
   };
   const verifyPrice = () => {
-    if(parseInt(priceMinSelect.value) > parseInt(priceMaxSelect.value)){
+    if (parseInt(priceMinSelect.value) > parseInt(priceMaxSelect.value)) {
       setError(true);
     } else {
       setError(false);
     }
-  }
+  };
 
   return (
     <div className="container">
-      <h2>Lots and Lands</h2>
-      { error ? <p>The Min Price field cannot be greater than the Max Price field </p> : '' }
-      <div className="filter-container">
-        <div className="filters">
-          <div className="filter">
-            <Dropdown className="mt-2" dropdownTitle="Types" items={items} />
-          </div>
-          <div className="filter">
-            <select id="city" ref={citySelect} onChange={handleChange}>
-              <option value="" selected>
-                City
-              </option>
-              {citiesArray.map((city, index) => (
-                <option value={city} >{city}</option>
-              ))}
-            </select>
-          </div>
-          <div className="filter">
-            <select id="minPrice" onChange={handleChange}>
-              <option value="" selected>
-                Min Price
-              </option>
-              <option value="50000">$ 50 K</option>
-              <option value="100000">$ 100 K</option>
-              <option value="200000">$ 200 K</option>
-              <option value="300000">$ 300 K</option>
-              <option value="500000">$ 500 K</option>
-              <option value="1000000">$ 1 M</option>
-            </select>
-          </div>
-          <div className={`filter ${ error? 'red-alert' : '' } `}>
-            <select id="maxPrice" onChange={handleChange}>
-              <option value="" selected>
-                Max Price
-              </option>
-              <option value="50000">$ 50 K</option>
-              <option value="100000">$ 100 K</option>
-              <option value="200000">$ 200 K</option>
-              <option value="300000">$ 300 K</option>
-              <option value="500000">$ 500 K</option>
-              <option value="1000000">$ 1 M</option>
-            </select>
+      <div className="container-title-filters">
+        <h2>Lots and Lands</h2>
+        {error ? (
+          <p>The Min Price field cannot be greater than the Max Price field </p>
+        ) : (
+          ""
+        )}
+        <div className="filter-container">
+          <div className="filters">
+            <div className="filter">
+              <Dropdown className="mt-2" dropdownTitle="Types" items={items} />
+            </div>
+            <div className="filter">
+              <select id="city" ref={citySelect} onChange={handleChange}>
+                <option value="" selected>
+                  City
+                </option>
+                {citiesArray.map((city, index) => (
+                  <option value={city}>{city}</option>
+                ))}
+              </select>
+            </div>
+            <div className="filter">
+              <select id="minPrice" onChange={handleChange}>
+                <option value="" selected>
+                  Min Price
+                </option>
+                <option value="50000">$ 50 K</option>
+                <option value="100000">$ 100 K</option>
+                <option value="200000">$ 200 K</option>
+                <option value="300000">$ 300 K</option>
+                <option value="500000">$ 500 K</option>
+                <option value="1000000">$ 1 M</option>
+              </select>
+            </div>
+            <div className={`filter ${error ? "red-alert" : ""} `}>
+              <select id="maxPrice" onChange={handleChange}>
+                <option value="" selected>
+                  Max Price
+                </option>
+                <option value="50000">$ 50 K</option>
+                <option value="100000">$ 100 K</option>
+                <option value="200000">$ 200 K</option>
+                <option value="300000">$ 300 K</option>
+                <option value="500000">$ 500 K</option>
+                <option value="1000000">$ 1 M</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -185,7 +189,14 @@ function Lots() {
         {data.map((property) => (
           <div key={property.LIST_3} className="Card">
             <Card id={property.LIST_3} price={property.LIST_22} />
-            <p>{property.LIST_39} | {property.FEAT20151201165322685242000000}</p>
+            <p>
+              {property.LIST_39} | {property.FEAT20151201165322685242000000}
+            </p>
+            <div className="description">
+              <p className="desc-level">
+                {`${property.LIST_57} Acres`}
+              </p>
+            </div>
             <ModalComponent property={property} type="lots" />
           </div>
         ))}

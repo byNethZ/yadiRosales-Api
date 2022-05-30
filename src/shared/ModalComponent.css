@@ -87,7 +87,16 @@
 
 .button-close{
     margin-top: 2rem;
+    margin-right: -1rem;
+    width: 3rem;
 }
+
+@media (min-width: 1024px) {
+    .button-close{
+        margin-right: 2rem;
+    }
+}
+
 .cell-design{
     padding: 1rem;
     border: 1px solid #6e6e6e;
@@ -137,6 +146,9 @@
         margin-left: auto;
         margin-right: auto;
         display: flex;
+    }
+    .modal-container > div{
+        width: 100%;
     }
     .dos-tercios{
         width: 66%;
