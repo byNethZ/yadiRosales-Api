@@ -12,11 +12,12 @@ import Admin from "./components/admin/Admin";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Content from "./components/properties/Content";
 import Dropdown from "./shared/Dropdown";
+import Navbar from "./shared/Navbar";
 
 function App() {
   return (
     <div className="App">
-      <Header />
+      <Navbar></Navbar>
       <Router>
         <Routes>
           <Route path="/" element={<Residential />} />

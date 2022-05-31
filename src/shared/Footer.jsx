@@ -11,11 +11,19 @@ function Footer() {
       <div className="bg-black">
         <div className="container content-footer">
           <div className="colbank">
-            <img src="./img/logo_blanco_50.png" alt="Logotipo Yadi Rosales" />
-            <img
-              src="./img/Logo_151006_Pryor_Realty_Inc_HZ_W_MO.png"
-              alt="Logotipo Coldwell Banker"
-            />
+            <picture>
+              <source srcSet="./img/logo_blanco_50.webp" type="image/webp"/>
+              <source srcSet="./img/logo_blanco_50.png" type="image/png"/> 
+              <img src="./img/logo_blanco_50.png" alt="Logotipo Yadi Rosales" />
+            </picture>
+            <picture>
+              <source srcSet="./img/Logo_151006_Pryor_Realty_Inc_HZ_W_MO.webp" type="image/webp"/>
+              <source srcSet="./img/Logo_151006_Pryor_Realty_Inc_HZ_W_MO.png" type="image/png"/> 
+              <img
+                src="./img/Logo_151006_Pryor_Realty_Inc_HZ_W_MO.png"
+                alt="Logotipo Coldwell Banker"
+              />
+            </picture>
           </div>
           <div className="footer-info">
             <div className="info-yadi">
