@@ -77,7 +77,12 @@
 }
 .charging-modal{
   position: fixed;
-  top
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width: 3rem;
+  margin: auto;
 }
 
 .mt-2{
