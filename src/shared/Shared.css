@@ -1,7 +1,7 @@
 /* Header */
 
 .Header{
-    background-image: url('../../public/img/inmobiliaria.jpg');
+    background-image: url('./../img/inmobiliaria.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -116,6 +116,10 @@
 .footer-rigths p{
     text-align: justify !important;
     padding: 1rem;
+}
+
+.footer-rigths .mls-container{
+    padding-left: 1rem;
 }
 
 /* Menu */

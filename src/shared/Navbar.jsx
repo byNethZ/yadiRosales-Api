@@ -2,15 +2,24 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Burger from "./Burger";
 
+import logo from './../img/logo_blanco_50.png';
+import { useNavigate } from "react-router-dom";
+
 function Navbar() {
   const [clicked, setClicked] = useState(false);
+  const navigate = useNavigate()
+
   const handleClick = () => {
     setClicked(!clicked);
   };
 
+  const goToHome = () => {
+    navigate('/')
+  }
+
   return (
     <NavContainer>
-      <img src="./img/logo_blanco_50.png" alt="Logotipo" />
+      <img style={{cursor: 'pointer'}} onClick={goToHome} src={logo} alt="Logotipo" />
       <BgDiv className={`initial ${clicked ? "active" : ""}`}></BgDiv>
       <div className={`links-container ${clicked ? "active" : ""}`}>
         <a href="https://yadirosalesrealtor.com/">Home</a>

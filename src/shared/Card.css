@@ -1,29 +1,51 @@
-.Card{
-    border: 1px solid rgb(238, 238, 238);
-    background-color: #fff;
-    border-radius: 1rem;
+.card{
     padding: 1rem;
-    margin-bottom: 0.8rem;
-    transition: all 300ms ease;
-}
-.Card:hover{
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-@media (min-width:768px) {
-    .Card{
-        width: 45%;
-    }
-}
-@media (min-width:1024px) {
-    .Card{
-        width: 20%;
-    }
+    background-color: #fff;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    transition: box-shadow 200ms ease-in;
 }
 
-.image{
-    height: auto;
-    overflow: hidden;
+.card:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.button-details {
+    display: none;
+}
+
+.card:hover .button-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.card:hover .button-details button{
+    background-color: #d11241;
+    border: #d11241;
+    border-radius: 0.2rem;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.card:hover .button-details button:hover{
+    background-color: #ac1037;
+    border: #ac1037;
+}
+
+.image-div{
     position: relative;
+    height: 15rem;
+    overflow: hidden;
 }
 
 .bg-gradient{
@@ -33,49 +55,135 @@
     left: 0;
     right: 0;
     background: rgb(110,75,152);
-background: linear-gradient(180deg, rgba(110,75,152,0) 0%, rgba(12,8,17,0.3) 85%, rgba(0,0,0,0.7) 100%);
+    background: linear-gradient(180deg, rgba(110,75,152,0) 0%, rgba(12,8,17,0.3) 85%, rgba(0,0,0,0.7) 100%);
 }
 
-.image .img{
+.image{
+    object-fit: cover;
+    width: 100%;
     height: 100%;
-    max-height: 14rem;
-    align-self: center;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-.image .img{
-    transition: all 0.2s ease-out ;
-}
-
-.image .img:hover{
-    transform: scale(1.05);
+.image-info{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .price{
-    position: absolute;
-    bottom: -1rem;
-    right: 1rem;
-    font-size: 2rem;
-    font-weight: 800;
+    text-align: left;
+    margin: 0;
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
     color: #fff;
 }
-.description{
-    display: flex;
-    justify-content: space-around;
+
+.picture-count{
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    background-color: #000000bb;
+    padding: .5rem;
+    border-radius: .2rem;
+    width: max-content;
 }
-.description img{
-    margin-left: 0.5rem;
-    height: 2rem;
-    width: 2rem;
+
+.picture-count p {
+    display: block;
+    text-align: center;
+    margin-right: 2rem;
+    color: #fff;
+    margin: 0 auto;
+
 }
-.description div{
-    display: flex;
-    align-items: center;
-}
-.desc-level{
-    width: 10rem;
-    white-space: nowrap;
+
+.direction{
+    font-weight: 400;
+    text-align: left;
+    margin: 0.5rem 0;
+    font-size: 1rem;
     text-overflow: ellipsis;
     overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.features{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.features p{
+    width: 33%;
+    font-size: .9rem;
+    margin: 0;
+    text-align: left;
+}
+
+.features span{
+    font-weight: bold;
+}
+
+.office-info{
+    font-size: .7rem;
+    text-align: left;
+    background-color: #000000bb;
+    padding: .5rem;
+    border-radius: .3rem;
+    width: fit-content;
+    max-width: 95%;
+    margin-top: .5rem;
+}
+
+.office-info p {
+    color: #fff;
+    margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.yadi-rosales-logo{
+    background-color: #000000bb;
+    width: 5rem;
+    padding: .2rem;
+    margin: .5rem 0;
+    border-radius: .2rem;
+}
+.yadi-rosales-logo img{
+    width: 100%;
+}
+
+.alert-container{
+    position: absolute;
+    z-index: 10;
+    top: 1rem;
+    left: 1rem;
+}
+
+.mls-container{
+    padding-top: 1rem;
+    text-align: left;
+}
+
+@media screen and (min-width: 768px) {
+    .price{
+        font-size: 1rem;
+        margin-left: 1rem;
+    }
+    .picture-count {
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .picture-count p {
+        font-size: .8rem;
+    }
+
+    .image-div{
+        height: 10rem;
+    }
 }

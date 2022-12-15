@@ -1,0 +1,45 @@
+.counts-container{
+    margin-bottom: 2rem;
+}
+
+.counts-container h2{
+    text-align: left;
+    margin: .5rem 0;
+}
+
+.counts-row{
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #ccc;
+    padding: .5rem 0;
+    cursor: pointer;
+}
+
+.counts-row p{
+    margin: 0;
+}
+
+.counts-row-name{
+    color: #d11241;
+    font-weight: 600;
+}
+
+.counts-row-quantity{
+    background-color: #d11241;
+    border-radius: .2rem;
+    color: #fff;
+    width: 4rem;
+    padding: .3rem;
+}
+
+@media screen and (min-width: 768px){
+    .counts-content{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .counts-row {
+        width: 48%;
+    }
+}

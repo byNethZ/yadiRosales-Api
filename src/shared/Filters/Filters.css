@@ -1,0 +1,109 @@
+.filters{
+    padding: 1rem;
+    position: relative;
+}
+
+.filters-container{
+    display: flex;
+    justify-content: center;
+    background-color: #d11241;
+    border-radius: .2rem;
+    width: fit-content;
+    margin: auto;
+}
+
+.filter{
+    width: 7rem;
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem .8rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.filter:hover{
+    background-color: #00000033;
+}
+
+.filter h3 {
+    color: #fff;
+    margin: 0;
+    user-select: none;
+}
+
+.arrow svg{
+    fill: #fff;
+}
+
+.filter-fields{
+    position: absolute;
+    z-index: 15;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-radius: .5rem;
+    width: 95%;
+    max-width: 18rem;
+    margin: .5rem auto;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.filter-fields h4{
+    text-transform: uppercase;
+}
+
+.value{
+    width: 7rem;
+    height: 1rem;
+    border: 1px solid #ccc;
+    border-radius: .5rem;
+    margin: 1rem auto;
+    padding: .5rem;
+}
+
+.value p{
+    margin: 0;
+}
+
+.filter-content-container{
+    width: 100%;
+
+}
+
+.filter-input input[type="radio"] {
+    position: absolute;
+	opacity: 0;
+	width: 0;
+}
+.filter-input label{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: .5rem;
+}
+
+.filter-input:hover{
+    background-color: #d11241;
+    color: #fff;
+}
+
+.filter-input-checkbox{
+    text-align: left;
+    display: flex;
+}
+
+.filter-input-checkbox:hover{
+    background-color: #d11241;
+    color: #fff;
+}
+
+.filter-input-checkbox input{
+    margin-right: .5rem;
+}
+
+.filter-input-checkbox label{
+    padding: .5rem;
+    width: 100%;
+}
+

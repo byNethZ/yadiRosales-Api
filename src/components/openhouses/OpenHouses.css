@@ -1,9 +1,0 @@
-@media (min-width: 768px) {
-    .OpenHouses{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        max-width: 90rem;
-        margin: 1rem auto;
-    }
-}

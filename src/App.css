@@ -174,3 +174,9 @@
 .justify-center{
   justify-content: center;
 }
+
+.content-container{
+  width: 90%;
+  max-width: 70rem;
+  margin: auto;
+}

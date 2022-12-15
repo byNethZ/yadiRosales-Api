@@ -1,0 +1,10 @@
+.alert-time-container{
+    background-color: #FFF061AA;
+    padding: .5rem;
+    border-radius: .2rem;
+}
+
+.alert-time-container h4{
+    margin: 0;
+    font-size: .8rem;
+}

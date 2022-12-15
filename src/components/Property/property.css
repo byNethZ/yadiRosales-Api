@@ -1,0 +1,241 @@
+.property{
+    padding-bottom: 3rem;
+}
+
+.property-header{
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.property-header-container{
+    text-align: left;
+    width: 90%;
+    max-width: 40rem;
+    margin: auto;
+}
+
+.property-header-street{
+    margin: 0;
+    margin-top: 1rem;
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.property-header-city{
+    margin: 0;
+}
+
+.property-header-price{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.property-container-price{
+    display: flex;
+    justify-content: space-between;
+}
+
+.property-header-price h4{
+    font-weight: 400;
+}
+
+.property-header-price span{
+    font-weight: bold;
+}
+
+.header-price{
+    font-size: 3rem;
+    margin: 0;
+    color: #3F8C56;
+}
+
+
+.des-tables-container{
+    width: 95%;
+    margin: auto;
+    margin-top: 3rem;
+}
+
+.description{
+    padding: 0 1.5rem;
+}
+
+.description-header-container{
+    border-bottom: 1px solid #ccc;
+}
+
+.description-info{
+    text-align: left;
+}
+
+.property-time-container{
+    max-width: fit-content;
+}
+
+/* Table Price */
+
+.property-table-price-cell{
+    border: 1px solid #ccc;
+}
+
+.property-table-price-cell h2{
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #d11241;
+}
+
+.property-table-price-row{
+    border: 1px solid #ccc;
+    display: flex;
+}
+
+.property-table-price-row div{
+    width: 50%;
+}
+
+.property-table-price-row div:first-child{
+    border-right: 1px solid #ccc;
+}
+
+.property-table-neighborhood{
+    border: 1px solid #ccc;
+}
+
+.property-table-neighborhood div{
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 0;
+}
+
+.property-table-neighborhood div:nth-child(odd){
+    background-color: rgb(230, 230, 230);
+
+}
+
+.property-table-neighborhood h5, .property-table-neighborhood p{
+    font-size: .8rem;
+    margin: 0;
+}
+
+/* School Table */
+
+.property-table-school{
+    border: 1px solid #ccc;
+    margin-top: 1rem;
+}
+
+.property-table-school h5, .property-table-school p{
+    font-size: .8rem;
+    margin: 0;
+}
+
+.property-table-school h5{
+    text-align: left;
+}
+
+.property-table-school p{
+    text-align: right;
+}
+
+.property-table-school-row{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+}
+
+.property-table-school-row:nth-child(even){
+    background-color: rgb(230, 230, 230);
+}
+
+/* Features Table */
+
+.property-features-container{
+    width: 95%;
+    margin: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    word-break: break-all;
+}
+
+.property-features-header{
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1rem;
+}
+
+.property-features-header h4{
+    margin: .5rem 0;
+}
+
+.property-table-features{
+    border: 1px solid #ccc;
+}
+
+.property-table-features-row{
+    display: flex;
+}
+
+.property-table-features-row:nth-child(odd){
+    background-color: rgb(230, 230, 230);
+}
+
+.property-table-features-row div{
+    border: 1px solid #ccc;
+    width: 50%;
+    padding: .5rem 0;
+}
+
+.property-table-features-row h6, .property-table-features-row p{
+    font-size: .8rem;
+    margin: 0;
+}
+
+@media screen and (min-width: 768px){
+
+    .container-content{
+        max-width: 80rem;
+    }
+
+    .des-tables-container{
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-evenly;
+        align-content: center;
+    }
+
+    .tables-price-school{
+        width: 30%;
+    }
+
+    .description{
+        width: 70%;
+    }
+
+    .property-features-container{
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .property-features{
+        width: 30%;
+    }
+
+    .property-header-price{
+        flex-direction: row;
+    }
+
+    .property-container-price{
+        width: 15rem;
+    }
+
+    .slider-price-container{
+        display: flex;
+        justify-content: space-between;
+        margin: auto;
+    }
+
+    .property-table-price{
+        margin-left: 2rem;
+        width: 35%;
+    }
+}
