@@ -1,0 +1,104 @@
+.contact-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.contact-form {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  width: 80%;
+  max-width: 35rem;
+}
+
+.contact-form h3 {
+  margin: 0.5rem 0;
+  text-align: left;
+}
+
+.contact-form-row,
+.contact-form-checkbox-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.contact-form-field {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 0.7rem 0;
+  width: 100%;
+}
+
+.contact-form-field input,
+.contact-form-field select,
+.contact-form-field option {
+  border-radius: 0.2rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  padding: 0.5rem;
+}
+
+.contact-form-checkbox-container {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.contact-form-checkbox {
+  margin-right: 0.5rem;
+}
+
+.contact-form-message,
+.contact-form-message label,
+.contact-form-message textarea {
+  text-align: left;
+  width: 100%;
+}
+
+.contact-form-message textarea {
+  resize: none;
+  height: 5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.2rem;
+}
+
+.contact-form-submit button {
+  width: 95%;
+  max-width: 15rem;
+  padding: 0.5rem;
+  border: 1px solid #d11241;
+  background-color: #d11241;
+  color: #fff;
+  border-radius: 0.2rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.contact-form-submit button:hover{
+    background-color: #a80f35;
+    border: 1px solid #a80f35;
+}
+
+.contact-form-disclaimer {
+  margin-top: 2rem;
+  font-size: 0.7rem;
+  text-align: left;
+}
+
+.contact-form-disclaimer span {
+  font-weight: 600;
+}
+
+@media screen and (min-width: 768px) {
+  .contact-form-row,
+  .contact-form-checkbox-container {
+    flex-wrap: nowrap;
+  }
+
+  .contact-form-field {
+    width: 48%;
+  }
+}

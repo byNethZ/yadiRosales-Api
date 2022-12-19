@@ -8,6 +8,7 @@ import Slider from "../../shared/Slider";
 
 import "./property.css";
 import AlertTime from "../../shared/AlertTime/AlertTime";
+import ContactForm from "../../shared/ContactForm/ContactForm";
 
 const Property = () => {
   const { id } = useParams();
@@ -487,6 +488,7 @@ const Property = () => {
         long={property?.longitude}
         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${credentials.mapsKey}&callback=useJsApiLoader`}
       />
+      <ContactForm id={property?.id}/>
     </div>
   );
 };

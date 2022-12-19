@@ -137,3 +137,15 @@ export interface IFilterOptions {
     yearBuilt: string | undefined;
     acres: string | undefined;
 }
+
+export interface IForm{
+    propertyid: number;
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+    message: string;
+    typetour: string;
+    date: string;
+    time: string
+}

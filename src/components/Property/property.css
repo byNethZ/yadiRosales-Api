@@ -75,6 +75,11 @@
 
 /* Table Price */
 
+.property-table-price{
+    width: 95%;
+    margin: auto;
+}
+
 .property-table-price-cell{
     border: 1px solid #ccc;
 }

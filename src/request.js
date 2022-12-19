@@ -15,7 +15,8 @@ const requests = {
     fetchDataColumns: `${base_url}/features`,
     fetchDataProperty: `${base_url}/property/`,
     fetchSearch: `${base_url}/search/`,
-    fetchCounts: `${base_url}/results-counts`
+    fetchCounts: `${base_url}/results-counts`,
+    sendContact: `${base_url}/contact`
 };
 
 export default requests;
