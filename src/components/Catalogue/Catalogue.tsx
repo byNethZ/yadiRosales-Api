@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PropertyProps } from "../../interfaces/Propety.interface";
 import requests from "../../request";
+import Back from "../../shared/Back/Back";
 import Card from "../../shared/Card";
 import Filter from "../../shared/Filters/Filters";
 import { TitleHash } from "../../utils/TitleHash";
 import "./catalogue.css";
 
 const Catalogue = () => {
-  const { gallery, feature, value } = useParams();
+  const { gallery, type, feature, value } = useParams();
   const [nextPage, setNextPage] = useState<string | null>(null);
   const [properties, setProperties] = useState<PropertyProps[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<PropertyProps[]>([]);
@@ -21,7 +22,7 @@ const Catalogue = () => {
   useEffect(() => {
     let url: string;
     let minutes = new Date().getMinutes()
-    url = gallery === 'results' ? `${requests.fetchSearch}${feature}/${value}` : `${requests.fetchProperties}${feature}`;
+    url = gallery === 'results' ? `${requests.fetchSearch}${type}/${feature}/${value}` : `${requests.fetchProperties}${feature}`;
     setProperties([])
 
     fetchData(url).catch(console.error);
@@ -68,6 +69,7 @@ const Catalogue = () => {
   return (
     <div className="catalogue-container">
       <div className="catalogue-title">
+        <Back/>
         <h2>{title}</h2>
       </div>
       <Filter onFilterData={(data) => {

@@ -9,17 +9,18 @@ import Slider from "../../shared/Slider";
 import "./property.css";
 import AlertTime from "../../shared/AlertTime/AlertTime";
 import ContactForm from "../../shared/ContactForm/ContactForm";
+import Back from "../../shared/Back/Back";
 
 const Property = () => {
   const { id } = useParams();
   const [property, setProperty] = useState<PropertyProps>();
-  const [minutesAgo, setMinutesAgo] = useState<number>(0)
+  const [minutesAgo, setMinutesAgo] = useState<number>(0);
 
   useEffect(() => {
     let minutes = new Date().getMinutes();
 
     if (id) fetchData(id);
-    setMinutesAgo(minutes)
+    setMinutesAgo(minutes);
   }, [id]);
 
   const fetchData = async (id: string) => {
@@ -32,6 +33,7 @@ const Property = () => {
   return (
     <div className="property">
       <div className="property-header">
+        <Back/>
         <div className="property-header-container">
           <h3 className="property-header-street">
             {property?.street_number} {property?.street}{" "}
@@ -42,7 +44,12 @@ const Property = () => {
           </p>
           <div className="property-header-price">
             <h2 className="header-price">
-              $ {property?.price?.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+              {property?.price &&
+                parseInt(property?.price).toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  minimumFractionDigits: 0,
+                })}
             </h2>
             <div className="property-container-price">
               <h4>
@@ -53,7 +60,7 @@ const Property = () => {
               </h4>
             </div>
           </div>
-          <div className="property-time-container" >
+          <div className="property-time-container">
             <AlertTime time={property?.updated_at} status={property?.status} />
           </div>
           <p className="minutes-ago">Updated {minutesAgo} minutes ago</p>
@@ -65,7 +72,12 @@ const Property = () => {
         <div className="property-table-price">
           <div className="property-table-price-cell">
             <h2>
-              $ {property?.price?.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+              {property?.price &&
+                parseInt(property?.price).toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  minimumFractionDigits: 0,
+                })}
             </h2>
           </div>
 
@@ -488,7 +500,7 @@ const Property = () => {
         long={property?.longitude}
         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${credentials.mapsKey}&callback=useJsApiLoader`}
       />
-      <ContactForm id={property?.id}/>
+      <ContactForm id={property?.id} />
     </div>
   );
 };

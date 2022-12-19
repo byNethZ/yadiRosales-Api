@@ -5,13 +5,14 @@
 .property-header{
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
 }
 
 .property-header-container{
     text-align: left;
     width: 90%;
     max-width: 40rem;
-    margin: auto;
 }
 
 .property-header-street{

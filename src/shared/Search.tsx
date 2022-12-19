@@ -6,6 +6,8 @@ import logo from "./../img/logo_blanco_50.png";
 
 import "./search.css";
 
+type TypeProperty = 'A' | 'B' | 'C' | 'D';
+
 interface Props {
   width: number;
   isHome: boolean;
@@ -30,6 +32,7 @@ type Item = {
 const Search = ({ width, isHome }: Props) => {
   const [dataColumns, setDataColumns] = useState<DataColumns>();
   const [valueSelect, setValueSelect] = useState<keyof DataColumns>();
+  const [typeProperty, setTypeProperty] = useState<TypeProperty>('A')
   const [items, setItems] = useState<Item[]>([]);
   const [query, setQuery] = useState({
     feature: "",
@@ -55,11 +58,11 @@ const Search = ({ width, isHome }: Props) => {
     //console.log(string, results);
     let search = string.charAt(0).toUpperCase() + string.slice(1);
     //console.log(search);
-    if(valueSelect)
-    setQuery({
-      feature: valueSelect,
-      value: search
-    });
+    if (valueSelect)
+      setQuery({
+        feature: valueSelect,
+        value: search,
+      });
     //console.log(items);
   };
 
@@ -98,7 +101,7 @@ const Search = ({ width, isHome }: Props) => {
     evt.preventDefault();
     //console.log(query);
     if (dataColumns && valueSelect)
-      navigate(`/results/${query.feature}/${query.value}`);
+      navigate(`/results/${typeProperty}/${query.feature}/${query.value}`);
   };
 
   useEffect(() => {
@@ -124,6 +127,11 @@ const Search = ({ width, isHome }: Props) => {
     border: "none",
   };
 
+  const handleChangeType = (evt: React.ChangeEvent<HTMLSelectElement>) => {
+    setTypeProperty(evt.target.value as TypeProperty);
+    console.log(typeProperty)
+  }
+
   return (
     <div
       className={`bar-search ${isHome ? "position-home" : "position-other"}`}
@@ -131,40 +139,50 @@ const Search = ({ width, isHome }: Props) => {
       <div className="logo-container-header">
         <img src={logo} alt="Logotipo" />
       </div>
-      <form className="form-search">
-        <select
-          defaultValue={"DEFAULT"}
-          className="select-search"
-          name="field"
-          id=""
-          onChange={(evt) =>
-            setValueSelect(evt.target.value as keyof DataColumns)
-          }
-        >
-          <option value="DEFAULT" disabled hidden>
-            Search By
-          </option>
-          <option value="city">City</option>
-          <option value="county">County</option>
-          <option value="state">State</option>
-          <option value="elementary_school">Elementary School</option>
-          <option value="middle_school">Middle School</option>
-          <option value="high_school">High School</option>
-          <option value="zipcode">Zipcode</option>
-          <option value="subtype">Type</option>
-        </select>
-        <div className={`input-search ${items.length === 0 ? "disabled" : ""}`}>
-          <ReactSearchAutocomplete
-            items={items}
-            onSearch={(string, result) => handleOnSearch(string, result)}
-            onHover={(result) => handleOnHover(result)}
-            onSelect={(item) => handleOnSelect(item)}
-            onFocus={() => handleOnFocus()}
-            autoFocus
-            styling={styles}
-            placeholder="Select from Search By Button"
-            formatResult={(item: any) => formatResult(item)}
-          />
+      <form className="form-container">
+        <div className="form-search">
+          <select
+            defaultValue={"DEFAULT"}
+            className="select-search"
+            name="field"
+            id=""
+            onChange={(evt) =>
+              setValueSelect(evt.target.value as keyof DataColumns)
+            }
+          >
+            <option value="DEFAULT" disabled hidden>
+              Search By
+            </option>
+            <option value="city">City</option>
+            <option value="county">County</option>
+            <option value="state">State</option>
+            <option value="elementary_school">Elementary School</option>
+            <option value="middle_school">Middle School</option>
+            <option value="high_school">High School</option>
+            <option value="zipcode">Zipcode</option>
+            <option value="subtype">Type</option>
+          </select>
+          <div
+            className={`input-search ${items.length === 0 ? "disabled" : ""}`}
+          >
+            <ReactSearchAutocomplete
+              items={items}
+              onSearch={(string, result) => handleOnSearch(string, result)}
+              onHover={(result) => handleOnHover(result)}
+              onSelect={(item) => handleOnSelect(item)}
+              onFocus={() => handleOnFocus()}
+              autoFocus
+              styling={styles}
+              placeholder="Select from Search By Button"
+              formatResult={(item: any) => formatResult(item)}
+            />
+          </div>
+          <select onChange={(evt) => setTypeProperty(evt.target.value as TypeProperty)} className="select-search select-type" name="" id="">
+            <option value="A">Residential</option>
+            <option value="B">Multifamily</option>
+            <option value="C">Land</option>
+            <option value="D">Rental</option>
+          </select>
         </div>
         <button onClick={(evt) => handleSearchButton(evt)} type="submit">
           Find Your Home

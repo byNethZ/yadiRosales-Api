@@ -1,0 +1,10 @@
+.back-container{
+    padding-right: 1rem;
+}
+
+.back-button{
+    height: 100%;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    cursor: pointer;
+}

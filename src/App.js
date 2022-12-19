@@ -41,7 +41,7 @@ function App() {
       <Header width={width} height={height} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/:gallery/:feature/:value" element={<Catalogue />} />
+          <Route path="/:gallery/:type/:feature/:value" element={<Catalogue />} />
           <Route path="/:gallery/:feature" element={<Catalogue />} />
           <Route path="/property/:id" element={<Property />} />
         </Routes>

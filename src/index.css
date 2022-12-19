@@ -21,3 +21,6 @@ code {
   align-items: center !important;
   justify-content: center !important;
 }
+.wrapper{
+  z-index: 20 !important;
+}
