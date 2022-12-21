@@ -25,7 +25,7 @@ const Counts = () => {
   };
 
   const handleClick = (value: string) => {
-    navigate(`/results/county/${value}`);
+    navigate(`/results/all/county/${value}`);
   }
 
   return (

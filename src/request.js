@@ -16,7 +16,8 @@ const requests = {
     fetchDataProperty: `${base_url}/property/`,
     fetchSearch: `${base_url}/search/`,
     fetchCounts: `${base_url}/results-counts`,
-    sendContact: `${base_url}/contact`
+    sendContact: `${base_url}/contact`,
+    coldwellBanker: `${base_url}/coldwell-banker`
 };
 
 export default requests;

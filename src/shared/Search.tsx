@@ -22,6 +22,8 @@ interface DataColumns {
   state: string[];
   zipcode: string[];
   subtype: string[];
+  list_number: string[];
+  address: string[];
 }
 
 type Item = {
@@ -45,7 +47,7 @@ const Search = ({ width, isHome }: Props) => {
     const fetchData = async () => {
       const response = await fetch(`${requests.fetchDataColumns}`);
       const data = await response.json();
-      //console.log(data)
+      console.log(data.data)
       setDataColumns(data.data);
     };
 
@@ -57,18 +59,36 @@ const Search = ({ width, isHome }: Props) => {
     // the string searched and for the second the results.
     //console.log(string, results);
     let search = string.charAt(0).toUpperCase() + string.slice(1);
-    //console.log(search);
-    if (valueSelect)
+    if(!valueSelect){
+      if(isNaN(+search)){
+        setValueSelect('address')
+        setQuery({
+          feature: 'address',
+          value: search,
+        });
+      }else {
+        setValueSelect('list_number')
+        setQuery({
+          feature: 'list_number',
+          value: search,
+        });
+      }
+
+    }
+
+    else if (valueSelect)
       setQuery({
         feature: valueSelect,
         value: search,
       });
-    //console.log(items);
+
+    console.log(items, valueSelect);
+
   };
 
   const handleOnHover = (result: Item) => {
     // the item hovered
-    //console.log(result);
+    //console.log('hover');
   };
 
   const handleOnSelect = (item: Item) => {
@@ -84,7 +104,7 @@ const Search = ({ width, isHome }: Props) => {
   };
 
   const handleOnFocus = () => {
-    //console.log("Focused");
+    //console.log("Focus");
   };
 
   const formatResult = (item: any) => {
@@ -100,8 +120,10 @@ const Search = ({ width, isHome }: Props) => {
   ) => {
     evt.preventDefault();
     //console.log(query);
-    if (dataColumns && valueSelect)
-      navigate(`/results/${typeProperty}/${query.feature}/${query.value}`);
+    if (valueSelect === 'list_number') return navigate(`/property/${query.value}`);
+
+    if (dataColumns && valueSelect) return navigate(`/results/${typeProperty}/${query.feature}/${query.value}`);
+  
   };
 
   useEffect(() => {
@@ -163,7 +185,7 @@ const Search = ({ width, isHome }: Props) => {
             <option value="subtype">Type</option>
           </select>
           <div
-            className={`input-search ${items.length === 0 ? "disabled" : ""}`}
+            className={`input-search`}
           >
             <ReactSearchAutocomplete
               items={items}
@@ -188,6 +210,11 @@ const Search = ({ width, isHome }: Props) => {
           Find Your Home
         </button>
       </form>
+      <div className="second-menu-container">
+        <ul className="second-menu-content">
+          <li onClick={ () => navigate(`/property/${query.value}`)}>Our listings</li>
+        </ul>
+      </div>
     </div>
   );
 };

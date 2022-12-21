@@ -43,7 +43,7 @@
     background-color: #fff;
     border-radius: .5rem;
     width: 95%;
-    max-width: 18rem;
+    max-width: 25rem;
     margin: .5rem auto;
     padding: 1rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -54,16 +54,28 @@
 }
 
 .value{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.value input{
     width: 7rem;
     height: 1rem;
     border: 1px solid #ccc;
     border-radius: .5rem;
-    margin: 1rem auto;
     padding: .5rem;
+    -moz-appearance: textfield;
 }
 
 .value p{
     margin: 0;
+}
+
+.value input::-webkit-outer-spin-button,
+.value input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .filter-content-container{
@@ -105,5 +117,14 @@
 .filter-input-checkbox label{
     padding: .5rem;
     width: 100%;
+}
+
+.price-container{
+    display: flex;
+}
+
+.max-price-container .filter-input label{
+    width: auto;
+    flex-direction: row-reverse;
 }
 

@@ -26,7 +26,7 @@ const Property = () => {
   const fetchData = async (id: string) => {
     const response = await fetch(`${requests.fetchDataProperty}${id}`);
     const data = await response.json();
-    //console.log(data);
+    console.log(data.data);
     setProperty(data.data);
   };
 
@@ -500,7 +500,7 @@ const Property = () => {
         long={property?.longitude}
         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${credentials.mapsKey}&callback=useJsApiLoader`}
       />
-      <ContactForm id={property?.id} />
+      <ContactForm id={property?.list_number} />
     </div>
   );
 };

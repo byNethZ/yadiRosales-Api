@@ -55,6 +55,11 @@ const NavContainer = styled.nav`
       font-size: 2rem;
       display: block;
     }
+
+    a:hover{
+      color: #ccc;
+    }
+
     @media (min-width: 768px) {
       position: initial;
       margin: 0;

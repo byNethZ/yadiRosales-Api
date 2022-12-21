@@ -18,7 +18,7 @@ function Card({ property }: Props) {
   const navigate = useNavigate();
 
   const handleclick = () => {
-    navigate(`/property/${property.id}`);
+    navigate(`/property/${property.list_number}`);
   };
 
   //replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")

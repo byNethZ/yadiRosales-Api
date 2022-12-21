@@ -22,7 +22,8 @@ const Catalogue = () => {
   useEffect(() => {
     let url: string;
     let minutes = new Date().getMinutes()
-    url = gallery === 'results' ? `${requests.fetchSearch}${type}/${feature}/${value}` : `${requests.fetchProperties}${feature}`;
+    url = gallery === 'results' ? `${requests.fetchSearch}${type}?feature=${feature}&query=${value}` : `${requests.fetchProperties}${feature}`;
+    console.log(url);
     setProperties([])
 
     fetchData(url).catch(console.error);
@@ -37,6 +38,13 @@ const Catalogue = () => {
 
     //console.log(properties)
   }, [gallery, feature, value]);
+
+  const setURL = (gallery: string | undefined) : string => {
+    if(gallery === 'results') return `${requests.fetchSearch}${type}?feature=${feature}&query=${value}`;
+    if(gallery === 'coldwell-banker') return `${requests.coldwellBanker}`;
+
+    return `${requests.fetchProperties}${feature}`;
+  }
 
   const handleClick = () => {
 
