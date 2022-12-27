@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   IFilterOptions,
   PropertyProps,
@@ -6,17 +6,9 @@ import {
 import requests from "../../request";
 import "./Filters.css";
 
-type TypeContentFilter =
-  | "minPrice"
-  | "maxPrice"
-  | "type"
-  | "beds"
-  | "bath"
-  | "status";
-
 interface PropsContentFilter {
   typeContent: string | null | undefined;
-  onCloseDropdown: (element: React.ChangeEvent<HTMLInputElement>) => void;
+  onCloseDropdown: (element: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => void;
   filters: IFilterOptions,
   subtypeChecks: string[],
   statusChecks: string[],
@@ -35,7 +27,9 @@ interface DataColumns {
 
 interface FilterProps {
   properties: PropertyProps[];
+  //actualURL: string;
   onFilterData: (data: PropertyProps[]) => void;
+  //onFilterData: (data: string) => void;
   isReset: boolean
 }
 const Arrow = () => {
@@ -62,13 +56,13 @@ const ContentFilter = ({
   subtypeChecks
 }: PropsContentFilter) => {
   const [inputElement, setInputElement] =
-    useState<React.ChangeEvent<HTMLInputElement>>();
+    useState<React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>>();
 
   const [dataColumns, setDataColumns] = useState<DataColumns>();
 
   useEffect(() => {
     if (inputElement) setCloseDropdown(inputElement);
-    //console.log(inputElement);
+
   }, [inputElement]);
 
   useEffect(() => {
@@ -80,15 +74,20 @@ const ContentFilter = ({
   const fetchData = async () => {
     const response = await fetch(`${requests.fetchDataColumns}`);
     const data = await response.json();
-    //console.log(data)
+    
     setDataColumns(data.data);
   };
 
-  const setCloseDropdown = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    //console.log(inputElement);
-    //console.log(evt);
+  const setCloseDropdown = (evt: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
+    
     onCloseDropdown(evt);
   };
+
+  const handleKeyDown = (evt: React.KeyboardEvent<HTMLInputElement>) => {
+    if(evt.key === 'Enter') setInputElement(evt);
+    //setInputElement((evt.target as HTMLInputElement).value)
+  }
+
   return (
     <div className="filter-fields">
       <h4>{typeContent}</h4>
@@ -98,7 +97,7 @@ const ContentFilter = ({
             <h5>Min Price</h5>
             <div className="value">
               <p>$</p>
-              <input type="number" name="minPrice" value={filters.minPrice} onChange={(evt) => setInputElement(evt)} />
+              <input type="number" name="minPrice" defaultValue={filters.minPrice || ''} onKeyDown={(evt) => handleKeyDown(evt)} />
             </div>
             <div className="filter-input">
               <input
@@ -205,7 +204,7 @@ const ContentFilter = ({
             <h5>Max Price</h5>
             <div className="value">
               <p>$</p>
-              <input type="number" name="maxPrice" value={filters.maxPrice} onChange={(evt) => setInputElement(evt)} />
+              <input type="number" name="maxPrice" defaultValue={filters.maxPrice || ''} onKeyDown={(evt) => handleKeyDown(evt)} />
             </div>
             <div className="filter-input">
               <input
@@ -320,6 +319,7 @@ const ContentFilter = ({
                 name="subtype"
                 value={type}
                 id={type}
+                defaultChecked={ subtypeChecks && subtypeChecks.some( ( el: string ) => el === type ) ? true : false }
               />
               <label htmlFor={type}>{type}</label>
             </div>
@@ -473,6 +473,7 @@ const ContentFilter = ({
               name="status"
               value="Pending"
               id="Pending"
+              defaultChecked={ statusChecks && statusChecks.some( ( el: string ) => el === 'Pending' ) ? true : false }
             />
             <label htmlFor="Pending">Pending</label>
           </div>
@@ -483,6 +484,7 @@ const ContentFilter = ({
               name="status"
               value="Contingent"
               id="Contingent"
+              defaultChecked={ statusChecks && statusChecks.some( ( el: string ) => el === 'Contingent' ) ? true : false }
             />
             <label htmlFor="Contingent">Contingent</label>
           </div>
@@ -493,6 +495,7 @@ const ContentFilter = ({
               name="status"
               value="Active"
               id="Active"
+              defaultChecked={ statusChecks && statusChecks.some( ( el: string ) => el === 'Active' ) ? true : false }
             />
             <label htmlFor="Active">Active</label>
           </div>
@@ -505,7 +508,9 @@ const ContentFilter = ({
 function Filters({ properties, onFilterData, isReset }: FilterProps) {
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const [typeContent, setTypeContent] = useState<string | null>();
-  const [isSetFilter, setIsSetFilter] = useState<boolean>(false);
+
+  const [executedFilter, setExecutedFilter] = useState<boolean | null>(null)
+  
   const [subtype, setSubtype] = useState<string[]>([]);
   const [statusProperties, setStatusProperties] = useState<string[]>([]);
   const [filters, setFilters] = useState<IFilterOptions>({
@@ -525,13 +530,20 @@ function Filters({ properties, onFilterData, isReset }: FilterProps) {
       ? setOpenDropdown(!openDropdown)
       : setOpenDropdown(true);
     setTypeContent(type);
-    //console.log(openDropdown);
+    
   };
 
   useEffect(() => {
     //filter properties
     let dataFiltered: PropertyProps[];
 
+    //console.log(executedFilter)
+    
+    //filter properties
+
+    if(executedFilter === null) return onFilterData(properties);
+
+    
     dataFiltered = properties
       .filter((property) => {
         if (filters.minPrice === undefined || filters.minPrice === null) {
@@ -578,10 +590,8 @@ function Filters({ properties, onFilterData, isReset }: FilterProps) {
         return statusProperties.includes(property.status);
       });
 
-    if (!isSetFilter) return onFilterData(properties);
-    //console.log(dataFiltered);
     onFilterData(dataFiltered);
-  }, [filters, properties]);
+  }, [properties, executedFilter]);
 
   useEffect(() => {
     if(isReset) {
@@ -600,22 +610,31 @@ function Filters({ properties, onFilterData, isReset }: FilterProps) {
       setSubtype([]);
       
       setStatusProperties([]);
+
+      setExecutedFilter(null)
+
     }
   }, [isReset])
   
 
-  const filterProperties = (el: React.ChangeEvent<HTMLInputElement>) => {
-    setIsSetFilter(true);
+  const filterProperties = (el: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
+    
+    
+    if ((el.target as (EventTarget & HTMLInputElement)).type === "checkbox") {
+      
+      (el.target as (EventTarget & HTMLInputElement)).checked && (el.target as (EventTarget & HTMLInputElement)).name === "subtype" ? setSubtype((subtype) => [...subtype, (el.target as (EventTarget & HTMLInputElement)).value]) : setSubtype((subtype) => subtype.filter((item) => item !== (el.target as (EventTarget & HTMLInputElement)).value));
 
-    if (el.target.type === "checkbox") {
-      el.target.checked && el.target.name === "subtype" ? setSubtype((subtype) => [...subtype, el.target.value]) : setSubtype((subtype) => subtype.filter((item) => item !== el.target.value));
+      (el.target as (EventTarget & HTMLInputElement)).checked && (el.target as (EventTarget & HTMLInputElement)).name === "status" ? setStatusProperties((statusProperties) => [...statusProperties, (el.target as (EventTarget & HTMLInputElement)).value]) : setStatusProperties((statusProperties) => statusProperties.filter((item) => item !== (el.target as (EventTarget & HTMLInputElement)).value));
 
-      el.target.checked && el.target.name === "status" ? setStatusProperties((statusProperties) => [...statusProperties, el.target.value]) : setStatusProperties((statusProperties) => statusProperties.filter((item) => item !== el.target.value));
 
+    } else {
+      setFilters({ ...filters, [(el.target as (EventTarget & HTMLInputElement)).name]: (el.target as (EventTarget & HTMLInputElement)).value });
+
+      //console.log(el);
+      setOpenDropdown(!openDropdown)
 
     }
 
-    setFilters({ ...filters, [el.target.name]: el.target.value });
   };
 
   return (
@@ -640,6 +659,14 @@ function Filters({ properties, onFilterData, isReset }: FilterProps) {
         <div onClick={() => handleClick("status")} className="filter">
           <h3>More</h3>
           <Arrow />
+        </div>
+        <div className="button-filter">
+          <button onClick={() => {
+              setExecutedFilter(() => executedFilter ? !executedFilter : true)
+              setOpenDropdown(false)
+            }} >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style={{fill: '#fff'}} data-darkreader-inline-fill=""><path d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"></path></svg>
+          </button>
         </div>
       </div>
       {openDropdown && (

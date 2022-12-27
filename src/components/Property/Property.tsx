@@ -26,7 +26,6 @@ const Property = () => {
   const fetchData = async (id: string) => {
     const response = await fetch(`${requests.fetchDataProperty}${id}`);
     const data = await response.json();
-    console.log(data.data);
     setProperty(data.data);
   };
 

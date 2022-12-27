@@ -1,5 +1,5 @@
-const base_url = 'http://localhost:8000/api';
-//const base_url = 'https://server.yadirosalesrealtor.com/api';
+//const base_url = 'http://localhost:8000/api';
+const base_url = 'https://server.yadirosalesrealtor.com/api';
 
 const requests = {
     fetchActiveAgents: `${base_url}/activeAgents`,

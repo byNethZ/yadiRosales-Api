@@ -4,7 +4,6 @@ import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "./Shared.css";
-import "./ModalComponent.css";
 
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 
@@ -14,7 +13,6 @@ interface Props {
 
 function Slider({list_number}: Props) {
 
-  const [charging, setCharging] = useState(true);
   const [urlsImage, setUrlsImage] = useState([]);
 
   useEffect(() => {
@@ -23,9 +21,6 @@ function Slider({list_number}: Props) {
         .then((response) => response.json())
         .then((info) => {
           setUrlsImage(info.imagesUrl);
-          //console.log(info.imagesUrl);
-          //console.log(list_number);
-          setCharging(false);
         });
     }
     if(list_number) fetchData();

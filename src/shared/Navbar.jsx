@@ -99,7 +99,7 @@ const NavContainer = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 25;
+  z-index: 50;
   position: fixed;
   left: 0;
   right: 0;

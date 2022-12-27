@@ -47,7 +47,6 @@ const Search = ({ width, isHome }: Props) => {
     const fetchData = async () => {
       const response = await fetch(`${requests.fetchDataColumns}`);
       const data = await response.json();
-      console.log(data.data)
       setDataColumns(data.data);
     };
 
@@ -57,7 +56,6 @@ const Search = ({ width, isHome }: Props) => {
   const handleOnSearch = (string: string, results: Item[]) => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
-    //console.log(string, results);
     let search = string.charAt(0).toUpperCase() + string.slice(1);
     if(!valueSelect){
       if(isNaN(+search)){
@@ -82,18 +80,14 @@ const Search = ({ width, isHome }: Props) => {
         value: search,
       });
 
-    console.log(items, valueSelect);
-
   };
 
   const handleOnHover = (result: Item) => {
     // the item hovered
-    //console.log('hover');
   };
 
   const handleOnSelect = (item: Item) => {
     // the item selected
-    //console.log(item);
     if (valueSelect) {
       let newQuery = {
         feature: valueSelect,
@@ -104,7 +98,6 @@ const Search = ({ width, isHome }: Props) => {
   };
 
   const handleOnFocus = () => {
-    //console.log("Focus");
   };
 
   const formatResult = (item: any) => {
@@ -119,7 +112,6 @@ const Search = ({ width, isHome }: Props) => {
     evt: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     evt.preventDefault();
-    //console.log(query);
     if (valueSelect === 'list_number') return navigate(`/property/${query.value}`);
 
     if (dataColumns && valueSelect) return navigate(`/results/${typeProperty}/${query.feature}/${query.value}`);
@@ -137,8 +129,6 @@ const Search = ({ width, isHome }: Props) => {
         };
         setItems((result) => [...result, newItem]);
 
-        //console.log(valueSelect)
-        //console.log(items)
       });
     }
   }, [valueSelect]);
@@ -148,11 +138,6 @@ const Search = ({ width, isHome }: Props) => {
     height: "3rem",
     border: "none",
   };
-
-  const handleChangeType = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    setTypeProperty(evt.target.value as TypeProperty);
-    console.log(typeProperty)
-  }
 
   return (
     <div
@@ -212,7 +197,7 @@ const Search = ({ width, isHome }: Props) => {
       </form>
       <div className="second-menu-container">
         <ul className="second-menu-content">
-          <li onClick={ () => navigate(`/property/${query.value}`)}>Our listings</li>
+          <li onClick={ () => navigate(`/coldwell-banker`)}>Our listings</li>
         </ul>
       </div>
     </div>

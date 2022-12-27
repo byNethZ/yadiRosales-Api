@@ -112,7 +112,10 @@
 }
 
 .ReactModal__Overlay, .ReactModal__Overlay--after-open{
-  background-color: rgba(255, 255, 255, 1) !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .margin-auto{
@@ -179,4 +182,9 @@
   width: 90%;
   max-width: 70rem;
   margin: auto;
+}
+
+.ReactModalPortal{
+  position: relative;
+  z-index: 30;
 }

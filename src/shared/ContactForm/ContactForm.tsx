@@ -8,9 +8,10 @@ import "./contactform.css";
 
 interface Props {
   id: number | undefined;
+  setCloseModal?: (bol: boolean) => void;
 }
 
-const ContactForm = ({ id }: Props) => {
+const ContactForm = ({ id, setCloseModal }: Props) => {
   const [sending, setSending] = useState<boolean>(false);
   const [isSended, setIsSended] = useState<boolean>(false);
   const [formData, setformData] = useState<IForm>({
@@ -36,18 +37,19 @@ const ContactForm = ({ id }: Props) => {
     const response = await fetch(`${requests.sendContact}`, {
       method: "POST",
       headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(formData),
     });
     const data = await response.json();
 
-    console.log(data);
     if (data.code === 200) {
       setSending(false);
       setIsSended(true);
+      localStorage.setItem('messageSended', '1');
     }
+    if(setCloseModal) setCloseModal(false);
   };
 
   return (
@@ -150,6 +152,7 @@ const ContactForm = ({ id }: Props) => {
               type="radio"
               name="typetour"
               value="personal"
+              id="personal"
             />
             <label htmlFor="personal">Tour in Person</label>
           </div>
@@ -165,6 +168,7 @@ const ContactForm = ({ id }: Props) => {
               type="radio"
               name="typetour"
               value="virtual"
+              id="virtual"
             />
             <label htmlFor="virtual">Tour via Video Chat</label>
           </div>
@@ -198,8 +202,9 @@ const ContactForm = ({ id }: Props) => {
               required
               name="time"
               id="time"
+              defaultValue=""
             >
-              <option selected disabled value="">
+              <option disabled value="">
                 Select one option
               </option>
               <option value="anytime">Anytime</option>

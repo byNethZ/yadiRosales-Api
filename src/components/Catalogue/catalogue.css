@@ -19,7 +19,8 @@
 .catalogue-info{
     display: flex;
     justify-content: space-between;
-    width: 70rem;
+    width: 90%;
+    max-width: 70rem;
     margin: auto;
 }
 

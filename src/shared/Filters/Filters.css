@@ -5,11 +5,18 @@
 
 .filters-container{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     background-color: #d11241;
     border-radius: .2rem;
     width: fit-content;
     margin: auto;
+}
+
+@media screen and (min-width: 768px){
+    .filters-container{
+        flex-direction: row;
+    }
 }
 
 .filter{
@@ -42,7 +49,7 @@
     right: 0;
     background-color: #fff;
     border-radius: .5rem;
-    width: 95%;
+    width: 90%;
     max-width: 25rem;
     margin: .5rem auto;
     padding: 1rem;
@@ -70,6 +77,7 @@
 
 .value p{
     margin: 0;
+    margin-right: .5rem;
 }
 
 .value input::-webkit-outer-spin-button,
@@ -126,5 +134,17 @@
 .max-price-container .filter-input label{
     width: auto;
     flex-direction: row-reverse;
+}
+
+.button-filter{
+    padding: 0 .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button-filter button{
+    border: none;
+    background-color: #00000000;
+    cursor: pointer;
 }
 

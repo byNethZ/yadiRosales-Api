@@ -12,7 +12,6 @@ interface Props {
 
 const Header = ({ width, height }: Props) => {
   let location = useLocation();
-  //console.log(location.pathname)
 
   return (
     <>

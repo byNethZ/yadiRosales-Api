@@ -18,7 +18,6 @@ const Section = ({ type, title }: Props) => {
     const fetchData = async () => {
       const response = await fetch(`${requests.fetchPropertiesHome}${type}`);
       const data = await response.json();
-      //console.log(data.data)
       setProperties(data.data);
     };
 
