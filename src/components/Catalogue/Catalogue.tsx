@@ -38,7 +38,11 @@ const Catalogue = () => {
     if(URLFetch) fetchData(URLFetch).catch(console.error);
     //console.log(URLFetch)
     setMinutesAgo(minutes);
+    setTitleCatalog();
 
+  }, [gallery, feature, value, currentPath, URLFetch]);
+
+  const setTitleCatalog = () => {
     if (feature !== undefined) {
       let featureFormatted = feature.replace(/^_*(.)|_+(.)/g, (s, c, d) =>
         c ? c.toUpperCase() : " " + d.toUpperCase()
@@ -49,9 +53,12 @@ const Catalogue = () => {
         : setTitle(
             `Properties/${TitleHash[feature as keyof typeof TitleHash]}`
           );
+    } else {
+      //console.log('title undefined');
+      setTitle('Coldwell Banker Pryor Listings')
     }
-    //console.log(URLFetch);
-  }, [gallery, feature, value, currentPath, URLFetch]);
+    //console.log(title, feature);
+  }
 
   const setURL = () => {
     if (currentPath === "/coldwell-banker") return setURLFetch(`${requests.coldwellBanker}`);

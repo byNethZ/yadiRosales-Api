@@ -14,6 +14,7 @@ interface Props {
 const ContactForm = ({ id, setCloseModal }: Props) => {
   const [sending, setSending] = useState<boolean>(false);
   const [isSended, setIsSended] = useState<boolean>(false);
+  const [tomorrow, setTomorrow] = useState<Date>(new Date())
   const [formData, setformData] = useState<IForm>({
     propertyid: 1,
     firstname: "",
@@ -28,7 +29,19 @@ const ContactForm = ({ id, setCloseModal }: Props) => {
 
   useEffect(() => {
     if (id) setformData({ ...formData, propertyid: id });
+
+    setTomorrowDate()
+
   }, [id]);
+
+  const setTomorrowDate = () => {
+    let today = new Date();
+    let nextDay = new Date(today);
+    
+    nextDay.setDate(today.getDate() + 1);
+    setTomorrow(nextDay)
+
+  }
 
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -188,6 +201,7 @@ const ContactForm = ({ id, setCloseModal }: Props) => {
               type="date"
               name="date"
               id="date"
+              min={`${tomorrow.getFullYear()}-${tomorrow.getMonth()+1}-${tomorrow.getDate()}`}
             />
           </div>
           <div className="contact-form-field">

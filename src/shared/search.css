@@ -140,3 +140,20 @@
         justify-content: space-evenly;
     }
 }
+
+.second-menu-button{
+    border: 1px solid #fff;
+    background-color: #ffffff00;
+    color: #fff;
+    transition: all .5s ease;
+    cursor: pointer;
+    padding: .5rem;
+    font-size: 1.2rem;
+    border-radius: .5rem;
+}
+
+.second-menu-button:hover{
+    background-color: #d11241;
+    color: #fff;
+    border: 1px solid #d11241;
+}

@@ -197,7 +197,9 @@ const Search = ({ width, isHome }: Props) => {
       </form>
       <div className="second-menu-container">
         <ul className="second-menu-content">
-          <li onClick={ () => navigate(`/coldwell-banker`)}>Our listings</li>
+          <li>
+            <button className="second-menu-button" onClick={ () => navigate(`/coldwell-banker`)} >Coldwell Banker Pryor Listings</button>
+          </li>
         </ul>
       </div>
     </div>
