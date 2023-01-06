@@ -40,7 +40,7 @@ export default Navbar;
 
 const NavContainer = styled.nav`
   img {
-    width: 7rem;
+    width: 5rem;
   }
   .links-container {
     position: absolute;
@@ -94,8 +94,8 @@ const NavContainer = styled.nav`
   a:hover {
     color: #fff;
   }
-  padding: 0.4rem;
-  background-color: rgba(17, 17, 17, 0.7);
+  padding: 0.5rem;
+  background-color: #333333;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -103,7 +103,12 @@ const NavContainer = styled.nav`
   position: fixed;
   left: 0;
   right: 0;
-  height: 4rem;
+  height: 5rem;
+
+  @media (min-width: 768px) {
+    height: 1rem;
+    justify-content: center;
+  }
 
   .burger {
     @media (min-width: 768px) {
