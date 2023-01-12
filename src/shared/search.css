@@ -3,41 +3,25 @@
     display: flex;
     align-items: center;
     margin: auto;
-    position: absolute;
+    position: relative;
     flex-direction: column;
-}
-
-.position-home{
-    margin-top: 10rem;
-}
-
-.position-other{
-    margin-top: 5rem;
-}
-
-.logo-container-header{
-    width: 90%;
-    max-width: 40rem;
-    background-color: rgba(17,17,17,0.7);
-    border-radius: .3rem .3rem 0 0;
-}
-
-.logo-container-header img{
-    width: 100%;
 }
 
 .form-container, .form-search{
-    width: 90%;
-    max-width: 40rem;
     display: flex;
     justify-content: center;
-    
     flex-direction: column;
     align-items: center;
 }
+
+.form-search{
+    width: 70%;
+}
+
 .form-container{
     background-color: rgba(17,17,17,0.7);
-    padding: .5rem 0;
+    padding: 1rem 0 .5rem 0;
+    width: 100%;
 }
 
 .select-search{
@@ -73,7 +57,7 @@
 .form-container button{
     height: 3rem;
     border: none;
-    width: 90%;
+    width: 70%;
     background-color: #d11241;
     border-radius: .5rem;
     color: #fff;
@@ -86,7 +70,6 @@
 }
 
 .second-menu-container{
-    background-color: rgba(17,17,17,0.7);
     width: 90%;
     max-width: 40rem;
 }
@@ -142,18 +125,12 @@
 }
 
 .second-menu-button{
-    border: 1px solid #fff;
-    background-color: #ffffff00;
+    border: 1px solid #d11241;
+    background-color: #d11241;
     color: #fff;
     transition: all .5s ease;
     cursor: pointer;
     padding: .5rem;
     font-size: 1.2rem;
     border-radius: .5rem;
-}
-
-.second-menu-button:hover{
-    background-color: #d11241;
-    color: #fff;
-    border: 1px solid #d11241;
 }

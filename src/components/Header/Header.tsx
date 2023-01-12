@@ -1,31 +1,42 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../../shared/Navbar";
-import Search from "../../shared/Search";
+
+import logo from "./../../img/logo_blanco_50.png";
+
+import videoHeaderWebm from "./../../video/Video_home-_4.webm";
+import videoHeaderMp4 from "./../../video/Video_home-_4.mp4";
 
 import "./header.css";
 
-interface Props {
-  width: number;
-  height: number;
-}
+const Header = () => {
+  const location = useLocation();
 
-const Header = ({ width, height }: Props) => {
-  let location = useLocation();
+  console.log(location);
 
   return (
     <>
       {location.pathname === "/" && (
-        <div>
+        <div className="bg-header">
+          <video className="video-header" autoPlay muted loop id="video-header">
+            <source src={videoHeaderWebm} type="video/webm" />
+            <source src={videoHeaderMp4} type="video/mp4" />
+          </video>
           <Navbar></Navbar>
-          <Search width={width} isHome={true} />
-          <div className="bg-header"></div>
+          <div className="logo-container-header">
+            <img src={logo} alt="Logotipo" />
+            <a
+              href="https://yadirosalesrealtor.com/contact-me/"
+              className="button-contact"
+            >
+              Contact Me
+            </a>
+          </div>
         </div>
       )}
       {location.pathname !== "/" && (
         <div className="bg-header-standard">
           <Navbar></Navbar>
-          <Search width={width} isHome={false}/>
         </div>
       )}
     </>

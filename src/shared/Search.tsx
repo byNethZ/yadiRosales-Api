@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import requests from "../request";
-import logo from "./../img/logo_blanco_50.png";
+
 
 import "./search.css";
 
@@ -143,9 +143,6 @@ const Search = ({ width, isHome }: Props) => {
     <div
       className={`bar-search ${isHome ? "position-home" : "position-other"}`}
     >
-      <div className="logo-container-header">
-        <img src={logo} alt="Logotipo" />
-      </div>
       <form className="form-container">
         <div className="form-search">
           <select

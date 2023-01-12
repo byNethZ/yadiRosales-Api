@@ -27,7 +27,7 @@ function Navbar() {
         <a href="https://yadirosalesrealtor.com/testimonials/">Testimonials</a>
         <a href="https://yadirosalesrealtor.com/gallery/">Gallery</a>
         <a href="https://yadirosalesrealtor.com/contact-me/">Contact me</a>
-        <a href="https://yadirosalesrealtor.com/inicio/">Español</a>
+        <a href="https://yadirosalesrealtor.com/conoce-mas/">Español</a>
       </div>
       <div className="burger">
         <Burger clicked={clicked} handleClick={handleClick} />
@@ -41,6 +41,10 @@ export default Navbar;
 const NavContainer = styled.nav`
   img {
     width: 5rem;
+
+    @media (min-width: 768px){
+      display: none;
+    }
   }
   .links-container {
     position: absolute;
@@ -133,7 +137,6 @@ const BgDiv = styled.div`
   }
 
   &.active {
-    border-radius: 0 0 80% 0;
     top: 0;
     left: 0;
     right: 0;

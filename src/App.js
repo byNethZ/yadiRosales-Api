@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import Catalogue from "./components/Catalogue/Catalogue";
 import Property from "./components/Property/Property";
 import ContactForm from "./shared/ContactForm/ContactForm";
+import Search from "./shared/Search";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -68,6 +69,7 @@ function App() {
     <div className="App">
       <Router>
         <Header width={width} height={height} />
+        <Search width={width} isHome={true} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route

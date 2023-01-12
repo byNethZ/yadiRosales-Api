@@ -67,6 +67,7 @@ function Footer() {
               The Coldwell Banker System fully supports the principles of the
               Fair Housing Act and the Equal Opportunity Act.
             </p>
+            <p>Video shot on location at Goodall Homes at Westview Crossing.</p>
             <div className="mls-container">
               <img src={mlsLogo} alt="MLS Share" />
             </div>
