@@ -1,19 +1,12 @@
 .bg-header{
-    /* background-image: url('./../../img/riverwalk.jpg');
-    background-repeat: no-repeat;
-    background-size: cover; */
     width: 100%;
-    height: 55rem;
+    height: 23rem;
     overflow: hidden;
     position: relative;
 }
 
 .bg-header-standard{
-    /* background-image: url('./../../img/riverwalk.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center; */
-    height: 5rem;
+    height: 6rem;
     overflow: hidden;
     position: relative;
 }
@@ -28,6 +21,8 @@
     bottom: 0;
     right: 0;
     overflow: hidden;
+    margin-top: 3rem;
+    background-color: #fff;
 }
 
 .video-header source{
@@ -41,7 +36,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 5rem;
+    bottom: 1rem;
 }
 
 .logo-container-header img{
@@ -51,6 +46,7 @@
     width: 100%;
     z-index: 100;
     margin-bottom: 1rem;
+    visibility: hidden;
 }
 
 .button-contact{
@@ -59,7 +55,7 @@
     border-radius: 2rem;
     border: none;
     padding: .8rem 1rem;
-    font-size: .9rem;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: background-color .3s ease-in-out;
     text-decoration: none;
@@ -73,5 +69,23 @@
 @media screen and (min-width: 768px) {
     .bg-header-standard{
         height: 3rem;
+    }
+    .bg-header{
+        height: 55rem;
+    }
+
+    .logo-container-header img{
+        visibility: visible;
+    }
+
+    .logo-container-header{
+        bottom: 5rem;
+    }
+    .button-contact{
+        font-size: .9rem;
+    }
+
+    .video-header{
+        margin-top: 0;
     }
 }

@@ -12,13 +12,13 @@ import "./header.css";
 const Header = () => {
   const location = useLocation();
 
-  console.log(location);
+  //console.log(location);
 
   return (
     <>
       {location.pathname === "/" && (
         <div className="bg-header">
-          <video className="video-header" autoPlay muted loop id="video-header">
+          <video className="video-header" playsInline autoPlay muted loop id="video-header">
             <source src={videoHeaderWebm} type="video/webm" />
             <source src={videoHeaderMp4} type="video/mp4" />
           </video>

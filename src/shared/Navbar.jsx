@@ -2,29 +2,35 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Burger from "./Burger";
 
-import logo from './../img/logo_blanco_50.png';
+import logo from "./../img/logo_blanco_50.png";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [clicked, setClicked] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setClicked(!clicked);
   };
 
   const goToHome = () => {
-    navigate('/')
-  }
+    navigate("/");
+  };
 
   return (
     <NavContainer>
-      <img style={{cursor: 'pointer'}} onClick={goToHome} src={logo} alt="Logotipo" />
+      <img
+        style={{ cursor: "pointer" }}
+        onClick={goToHome}
+        src={logo}
+        alt="Logotipo"
+      />
       <BgDiv className={`initial ${clicked ? "active" : ""}`}></BgDiv>
       <div className={`links-container ${clicked ? "active" : ""}`}>
-        <a href="https://yadirosalesrealtor.com/">Home</a>
+        <a href="https://yadirosalesrealtor.com/learn-more/">Learn More</a>
         <a href="https://yadirosalesrealtor.com/about-me/">About me</a>
         <a href="https://yadirosalesrealtor.com/testimonials/">Testimonials</a>
+        <a href="https://yadirosalesrealtor.com/resources/">Resources</a>
         <a href="https://yadirosalesrealtor.com/gallery/">Gallery</a>
         <a href="https://yadirosalesrealtor.com/contact-me/">Contact me</a>
         <a href="https://yadirosalesrealtor.com/conoce-mas/">Español</a>
@@ -42,7 +48,7 @@ const NavContainer = styled.nav`
   img {
     width: 5rem;
 
-    @media (min-width: 768px){
+    @media (min-width: 768px) {
       display: none;
     }
   }
@@ -60,7 +66,7 @@ const NavContainer = styled.nav`
       display: block;
     }
 
-    a:hover{
+    a:hover {
       color: #ccc;
     }
 
@@ -131,7 +137,7 @@ const BgDiv = styled.div`
   border-top: 2px solid #0034c8;
   z-index: -1;
   transition: all 0.6s ease;
-  
+
   @media (min-width: 768px) {
     display: none;
   }

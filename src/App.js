@@ -96,7 +96,7 @@ function App() {
           setCloseModal={(res) => {
             setIsOpen(res);
             setIsSendedMessage(localStorage.getItem("messageSended"));
-            console.log(isSendedMessage);
+            //console.log(isSendedMessage);
           }}
         />
       </Modal>
